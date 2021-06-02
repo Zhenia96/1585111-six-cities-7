@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Yauheni Kirychenka](https://up.htmlacademy.ru/react/7/user/1585111).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Гуляев](https://htmlacademy.ru/profile/dima).
 
 ---
 
