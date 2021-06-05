@@ -1,7 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import MainPage from '../main-page/main-page.jsx';
 
-function App() {
-  return <p>Hello, world!</p>;
+export default function App(props) {
+  const { hotels } = props;
+  return <MainPage hotels={hotels} />;
 }
 
-export default App;
+App.propTypes = {
+  hotels: PropTypes.array.isRequired,
+};
