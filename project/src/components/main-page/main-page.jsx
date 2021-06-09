@@ -1,3 +1,4 @@
+import { CardType } from '../../constant.js';
 import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
@@ -92,7 +93,7 @@ export default function MainPage({ hotels }) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {hotels.map((hotel) => (<PlaceCard key={hotel.id} hotel={hotel}></PlaceCard>))}
+                {hotels.map((hotel) => (<PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.CITIES}></PlaceCard>))}
               </div>
             </section>
             <div className="cities__right-section">
