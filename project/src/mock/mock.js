@@ -1,3 +1,5 @@
+import { createDate } from '../utils/common.js';
+
 const cityNames = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 const images = ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg'];
 const avatars = ['img/avatar-angelina.jpg', 'img/avatar-max.jpg', 'img/avatar.svg'];
@@ -13,6 +15,10 @@ let commentId = 0;
 
 function getRandomIntegerRange(min = 0, max = 10) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomBool() {
+  return Boolean(Math.round(Math.random()));
 }
 
 function getRandomCityName() {
@@ -31,13 +37,13 @@ export function getHotelData() {
     host: {
       avatarUrl: avatars[0],
       id: generateId(),
-      isPro: Boolean(Math.round(Math.random())),
+      isPro: getRandomBool(),
       name: 'Angelina',
     },
     id: hotelId++,
     images,
-    isFavorite: Boolean(Math.round(Math.random())),
-    isPremium: Boolean(Math.round(Math.random())),
+    isFavorite: getRandomBool(),
+    isPremium: getRandomBool(),
     maxAdults: getRandomIntegerRange(1, 5),
     previewImage: 'img/apartment-02.jpg',
     price: getRandomIntegerRange(0, 1000),
@@ -51,23 +57,23 @@ export function getHotelsData(count) {
   return Array(count).fill().map(() => getHotelData());
 }
 
-export function getCommentData() {
+export function getReviewData() {
   return {
     comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    date: '2019-05-08T14:13:56.569Z',
+    date: createDate('2019-05-08T14:13:56.569Z'),
     id: commentId++,
     rating: 4,
     user: {
       avatarUrl: avatars[1],
       id: generateId(),
-      isPro: Boolean(Math.round(Math.random())),
+      isPro: getRandomBool(),
       name: 'Max',
     },
   };
 }
 
-export function getCommentsData(count) {
-  return Array(count).fill().map(() => getCommentData());
+export function getReviewsData(count) {
+  return Array(count).fill().map(() => getReviewData());
 }
 
 export function getUserData() {

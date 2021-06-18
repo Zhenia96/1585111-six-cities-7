@@ -1,3 +1,4 @@
+import { AppPath } from '../../constant.js';
 import React from 'react';
 import PropTypes from 'prop-types';
 import MainPage from '../main-page/main-page.jsx';
@@ -7,27 +8,27 @@ import RoomPage from '../room-page/room-page.jsx';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 export default function App(props) {
-  const { hotels } = props;
+  const { hotels, reviews, user } = props;
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact>
-          <MainPage hotels={hotels} />
+        <Route path={AppPath.MAIN} exact>
+          <MainPage hotels={hotels} user={user} />
         </Route>
-        <Route path='/login' exact>
+        <Route path={AppPath.LOGIN} exact>
           <SignInPage />
         </Route>
-        <Route path='/favorites' exact>
-          <FavoritesPage hotels={hotels} />
+        <Route path={AppPath.FAVORITES} exact>
+          <FavoritesPage hotels={hotels} user={user} />
         </Route>
-        <Route path='/offer/:id' exact>
-          <RoomPage hotels={hotels} />
+        <Route path={`${AppPath.OFFER}/:id`} exact>
+          <RoomPage hotels={hotels} reviews={reviews} user={user} />
         </Route>
         <Route>
           <React.Fragment>
             <h1>Error 404</h1>
-            <Link to='/'>Go to main page</Link>
+            <Link to={AppPath.MAIN}>Go to main page</Link>
           </React.Fragment>
         </Route>
       </Switch>
@@ -37,4 +38,6 @@ export default function App(props) {
 
 App.propTypes = {
   hotels: PropTypes.array.isRequired,
+  reviews: PropTypes.array,
+  user: PropTypes.object,
 };
