@@ -8,8 +8,12 @@ import PremiumMark from '../premium-mark/premium-mark.jsx';
 export default function PlaceCard({ hotel, cardType, onCardMouseOver }) {
   const { isFavorite, isPremium, previewImage, price, rating, title, type, id } = hotel;
 
+  function handleCardMouseOver() {
+    return (cardType === CardType.CITIES) ? onCardMouseOver(id) : false;
+  }
+
   return (
-    <article className={`${cardType}__place-card place-card`} onMouseOver={() => (cardType === CardType.CITIES) ? onCardMouseOver(id) : false}>
+    <article className={`${cardType}__place-card place-card`} onMouseOver={handleCardMouseOver}>
       {isPremium ? <PremiumMark /> : ''}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
         <Link to={'#'}>

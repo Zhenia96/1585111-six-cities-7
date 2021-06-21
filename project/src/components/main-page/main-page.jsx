@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import CityContainer from '../city-container/city-container.jsx';
 import PageHeader from '../page-header/page-header.jsx';
 
-const DEFAULT_CITY = 'Paris';
 const City = {
   PARIS: 'Paris',
   COLOGNE: 'Cologne',
@@ -12,6 +11,7 @@ const City = {
   HAMBURG: 'Hamburg',
   DUSSELDORF: 'Dusseldorf',
 };
+const DEFAULT_CITY = City.PARIS;
 
 function setActiveClass(checkedCity, city) {
   return checkedCity === city ? 'tabs__item--active' : '';
@@ -37,6 +37,10 @@ export default function MainPage({ hotels, user }) {
     if (!evt.target.children.length) {
       setCity(evt.target.textContent);
     }
+  }
+
+  function onCardMouseOver(id) {
+    setActiveCard(id);
   }
 
   return (
@@ -81,7 +85,7 @@ export default function MainPage({ hotels, user }) {
           </section>
         </div>
         <div className="cities">
-          <CityContainer hotels={filterHotels(hotels, city)} city={city} onCardMouseOver={(id) => setActiveCard(id)} />
+          <CityContainer hotels={filterHotels(hotels, city)} city={city} onCardMouseOver={onCardMouseOver} />
         </div>
       </main>
     </div>);
