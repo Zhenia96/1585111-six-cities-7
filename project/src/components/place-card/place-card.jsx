@@ -1,17 +1,24 @@
+import { AppPath, CardType } from '../../constant.js';
 import { getPercentageRating, getTextWithCapitalFirstLetter } from '../../utils/common.js';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import PremiumMark from '../premium-mark/premium-mark.jsx';
 
-export default function PlaceCard({ hotel, cardType }) {
-  const { isFavorite, isPremium, previewImage, price, rating, title, type } = hotel;
+export default function PlaceCard({ hotel, cardType, onCardMouseOver }) {
+  const { isFavorite, isPremium, previewImage, price, rating, title, type, id } = hotel;
+
+  function handleCardMouseOver() {
+    return (cardType === CardType.CITIES) ? onCardMouseOver(id) : false;
+  }
+
   return (
-    <article className={`${cardType}__place-card place-card`}>
+    <article className={`${cardType}__place-card place-card`} onMouseOver={handleCardMouseOver}>
       {isPremium ? <PremiumMark /> : ''}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-        <a href="/">
+        <Link to={'#'}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
-        </a>
+        </Link>
       </div>
       <div className={`${cardType}__card-info place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -33,7 +40,7 @@ export default function PlaceCard({ hotel, cardType }) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={`${AppPath.OFFER}/${hotel.id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{getTextWithCapitalFirstLetter(type)}</p>
       </div>
@@ -47,9 +54,11 @@ PlaceCard.propTypes = {
     isPremium: PropTypes.bool.isRequired,
     previewImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }),
   cardType: PropTypes.string.isRequired,
+  onCardMouseOver: PropTypes.func,
 };
