@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { getHotelsData, getReviewsData, getUserData } from './mock/mock.js';
-const HOTELS_COUNT = 5;
+const HOTELS_COUNT = 4;
 const REVIEWS_COUNT = 5;
 
 ReactDOM.render(

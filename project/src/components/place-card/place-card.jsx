@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import PremiumMark from '../premium-mark/premium-mark.jsx';
 
 export default function PlaceCard({ hotel, cardType, onCardMouseOver }) {
-  const { isFavorite, isPremium, previewImage, price, rating, title, type, id } = hotel;
+  const { isFavorite, isPremium, previewImage, price, rating, title, type } = hotel;
 
   function handleCardMouseOver() {
-    return (cardType === CardType.CITIES) ? onCardMouseOver(id) : false;
+    return (cardType === CardType.CITIES) ? onCardMouseOver(hotel) : false;
   }
 
   return (

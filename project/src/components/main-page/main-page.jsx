@@ -11,7 +11,8 @@ const City = {
   HAMBURG: 'Hamburg',
   DUSSELDORF: 'Dusseldorf',
 };
-const DEFAULT_CITY = City.PARIS;
+
+const DEFAULT_CITY = City.AMSTERDAM;
 
 function setActiveClass(checkedCity, city) {
   return checkedCity === city ? 'tabs__item--active' : '';
@@ -23,14 +24,8 @@ function filterHotels(hotels, city) {
 
 export default function MainPage({ hotels, user }) {
   const [city, setCity] = useState(DEFAULT_CITY);
-  const [activeCard, setActiveCard] = useState(null);
-
-
-  function temporaryFunction() {
-    return activeCard;
-  }
-  temporaryFunction();
-
+  const [activeHotel, setActiveHotel] = useState(null);
+  const [emptyStatus, setEmptyStatus] = useState(false);
 
   function changeCity(evt) {
     evt.preventDefault();
@@ -39,14 +34,10 @@ export default function MainPage({ hotels, user }) {
     }
   }
 
-  function onCardMouseOver(id) {
-    setActiveCard(id);
-  }
-
   return (
     <div className="page page--gray page--main">
       <PageHeader user={user} />
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${!emptyStatus ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -85,7 +76,7 @@ export default function MainPage({ hotels, user }) {
           </section>
         </div>
         <div className="cities">
-          <CityContainer hotels={filterHotels(hotels, city)} city={city} onCardMouseOver={onCardMouseOver} />
+          <CityContainer hotels={filterHotels(hotels, city)} city={city} onCardMouseOver={setActiveHotel} activeHotel={activeHotel} changeEmptyStatus={setEmptyStatus} />
         </div>
       </main>
     </div>);

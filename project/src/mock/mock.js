@@ -5,12 +5,30 @@ const images = ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 
 const avatars = ['img/avatar-angelina.jpg', 'img/avatar-max.jpg', 'img/avatar.svg'];
 const DESCRIPTION = 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.';
 const goods = ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'];
+const locations = [{
+  latitude: 52.3909553943508,
+  longitude: 4.85309666406198,
+  zoom: 8,
+}, {
+  latitude: 52.369553943508,
+  longitude: 4.85309666406198,
+  zoom: 8,
+},
+{
+  latitude: 52.3909553943508,
+  longitude: 4.929309666406198,
+  zoom: 8,
+},
+{
+  latitude: 52.3809553943508,
+  longitude: 4.939309666406198,
+  zoom: 8,
+}];
 
 function generateId() {
   return 100 * Math.random();
 }
 
-let hotelId = 0;
 let commentId = 0;
 
 function getRandomIntegerRange(min = 0, max = 10) {
@@ -21,16 +39,16 @@ function getRandomBool() {
   return Boolean(Math.round(Math.random()));
 }
 
-function getRandomCityName() {
-  const randomIndex = getRandomIntegerRange(0, (cityNames.length - 1));
-  return cityNames[randomIndex];
-}
-
-export function getHotelData() {
+export function getHotelData(hotelNumber) {
   return {
     bedrooms: getRandomIntegerRange(1, 5),
     city: {
-      name: getRandomCityName(),
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10,
+      },
+      name: cityNames[3],
     },
     description: DESCRIPTION,
     goods,
@@ -40,10 +58,11 @@ export function getHotelData() {
       isPro: getRandomBool(),
       name: 'Angelina',
     },
-    id: hotelId++,
+    id: hotelNumber,
     images,
     isFavorite: getRandomBool(),
     isPremium: getRandomBool(),
+    location: locations[hotelNumber],
     maxAdults: getRandomIntegerRange(1, 5),
     previewImage: 'img/apartment-02.jpg',
     price: getRandomIntegerRange(0, 1000),
@@ -54,7 +73,12 @@ export function getHotelData() {
 }
 
 export function getHotelsData(count) {
-  return Array(count).fill().map(() => getHotelData());
+  let hotelNumber = 0;
+  return Array(count).fill().map(() => {
+    const hotel = getHotelData(hotelNumber);
+    hotelNumber++;
+    return hotel;
+  });
 }
 
 export function getReviewData() {
