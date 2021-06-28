@@ -11,6 +11,7 @@ import Review from '../review/review.jsx';
 import Comment from '../comment/comment.jsx';
 import PageHeader from '../page-header/page-header.jsx';
 import { Redirect, useParams } from 'react-router-dom';
+import Map from '../map/map.jsx';
 
 function getCurrentHotel(hotels, id) {
   return hotels.find((hotel) => hotel.id === Number(id));
@@ -108,7 +109,9 @@ export default function RoomPage({ hotels, reviews, user }) {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map hotels={hotels} activeHotel={currentHotel} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
