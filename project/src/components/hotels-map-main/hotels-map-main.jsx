@@ -1,11 +1,11 @@
 import React from 'react';
-import Map from '../map/map.jsx';
+import HotelsMap from '../hotels-map/hotels-map.jsx';
 import PropTypes from 'prop-types';
 
 export default function MapMain({ hotels, activeHotel }) {
   return (
     <section className="cities__map map">
-      <Map hotels={hotels} activeHotel={activeHotel} />
+      <HotelsMap hotels={hotels} activeHotel={activeHotel} />
     </section>
   );
 }
