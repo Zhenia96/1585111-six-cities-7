@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CityContainer from '../city-container/city-container.jsx';
 import PageHeader from '../page-header/page-header.jsx';
 import { City } from '../../constant.js';
+import { sortHotels } from '../../utils/common.js';
 import { actionCreator } from '../../store/action.js';
 import { connect } from 'react-redux';
 
@@ -17,6 +18,7 @@ function filterHotels(hotels, city) {
 function mapStateToProps(state) {
   return {
     city: state.city,
+    sortType: state.sortType,
   };
 }
 
@@ -28,10 +30,12 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function MainPage({ hotels, user, city, onChangeCity }) {
+function MainPage({ hotels, user, city, onChangeCity, sortType }) {
 
   const [activeHotel, setActiveHotel] = useState(null);
   const [emptyStatus, setEmptyStatus] = useState(false);
+
+  const filteredHotels = filterHotels(hotels, city);
 
   function changeCity(evt) {
     evt.preventDefault();
@@ -82,7 +86,7 @@ function MainPage({ hotels, user, city, onChangeCity }) {
           </section>
         </div>
         <div className="cities">
-          <CityContainer hotels={filterHotels(hotels, city)} city={city} onCardMouseOver={setActiveHotel} activeHotel={activeHotel} changeEmptyStatus={setEmptyStatus} />
+          <CityContainer hotels={sortHotels(filteredHotels, sortType)} city={city} onCardMouseOver={setActiveHotel} activeHotel={activeHotel} changeEmptyStatus={setEmptyStatus} />
         </div>
       </main>
     </div>);
@@ -93,6 +97,7 @@ MainPage.propTypes = {
   user: PropTypes.object,
   city: PropTypes.string.isRequired,
   onChangeCity: PropTypes.func.isRequired,
+  sortType: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
