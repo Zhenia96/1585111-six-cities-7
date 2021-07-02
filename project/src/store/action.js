@@ -9,4 +9,8 @@ export const actionCreator = {
     type: ActionType.CHANGE_HOTELS,
     payload: hotels,
   }),
+  changeSortType: (sortType) => ({
+    type: ActionType.CHANGE_SORT_TYPE,
+    payload: sortType,
+  }),
 };

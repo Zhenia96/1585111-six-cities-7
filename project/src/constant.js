@@ -20,6 +20,7 @@ export const AppPath = {
 export const ActionType = {
   CHANGE_CITY: 'changeCity',
   CHANGE_HOTELS: 'changeHotels',
+  CHANGE_SORT_TYPE: 'changeSortType',
 };
 
 export const City = {
@@ -29,4 +30,11 @@ export const City = {
   AMSTERDAM: 'Amsterdam',
   HAMBURG: 'Hamburg',
   DUSSELDORF: 'Dusseldorf',
+};
+
+export const SortType = {
+  POPULAR: 'Popular',
+  PRICE_LOW_TO_HIGH: 'Price: low to high',
+  PRICE_HIGH_TO_LOW: 'Price: high to low',
+  RAITING_HIGH_TO_LOW: 'Top rated first',
 };
