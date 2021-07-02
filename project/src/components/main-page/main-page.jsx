@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CityContainer from '../city-container/city-container.jsx';
 import PageHeader from '../page-header/page-header.jsx';
-
-const City = {
-  PARIS: 'Paris',
-  COLOGNE: 'Cologne',
-  BRUSSELS: 'Brussels',
-  AMSTERDAM: 'Amsterdam',
-  HAMBURG: 'Hamburg',
-  DUSSELDORF: 'Dusseldorf',
-};
+import { City } from '../../constant.js';
 
 const DEFAULT_CITY = City.AMSTERDAM;
 

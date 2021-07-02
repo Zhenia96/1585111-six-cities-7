@@ -16,3 +16,16 @@ export const AppPath = {
   OFFER: '/offer',
   ERROR: '/error',
 };
+
+export const actionType = {
+  CHANGE_CITY: 'changeCity',
+};
+
+export const City = {
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  AMSTERDAM: 'Amsterdam',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
+};
