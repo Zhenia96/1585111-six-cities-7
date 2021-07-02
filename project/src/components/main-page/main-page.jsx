@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import CityContainer from '../city-container/city-container.jsx';
 import PageHeader from '../page-header/page-header.jsx';
 import { City } from '../../constant.js';
-
-const DEFAULT_CITY = City.AMSTERDAM;
+import { actionCreator } from '../../store/action.js';
+import { connect } from 'react-redux';
 
 function setActiveClass(checkedCity, city) {
   return checkedCity === city ? 'tabs__item--active' : '';
@@ -14,15 +14,29 @@ function filterHotels(hotels, city) {
   return hotels.filter((hotel) => hotel.city.name === city);
 }
 
-export default function MainPage({ hotels, user }) {
-  const [city, setCity] = useState(DEFAULT_CITY);
+function mapStateToProps(state) {
+  return {
+    city: state.city,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onChangeCity: (city) => (
+      dispatch(actionCreator.changeCity(city))
+    ),
+  };
+}
+
+function MainPage({ hotels, user, city, onChangeCity }) {
+
   const [activeHotel, setActiveHotel] = useState(null);
   const [emptyStatus, setEmptyStatus] = useState(false);
 
   function changeCity(evt) {
     evt.preventDefault();
     if (!evt.target.children.length) {
-      setCity(evt.target.textContent);
+      onChangeCity(evt.target.textContent);
     }
   }
 
@@ -77,4 +91,8 @@ export default function MainPage({ hotels, user }) {
 MainPage.propTypes = {
   hotels: PropTypes.array.isRequired,
   user: PropTypes.object,
+  city: PropTypes.string.isRequired,
+  onChangeCity: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

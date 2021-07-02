@@ -1,8 +1,12 @@
-import { actionType } from '../../constant.js';
+import { ActionType } from '../constant.js';
 
-export const createAction = {
+export const actionCreator = {
   changeCity: (city) => ({
-    type: actionType.CHANGE_CITY,
+    type: ActionType.CHANGE_CITY,
     payload: city,
+  }),
+  changeHotels: (hotels) => ({
+    type: ActionType.CHANGE_HOTELS,
+    payload: hotels,
   }),
 };

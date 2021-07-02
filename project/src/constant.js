@@ -17,8 +17,9 @@ export const AppPath = {
   ERROR: '/error',
 };
 
-export const actionType = {
+export const ActionType = {
   CHANGE_CITY: 'changeCity',
+  CHANGE_HOTELS: 'changeHotels',
 };
 
 export const City = {

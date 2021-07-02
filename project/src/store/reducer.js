@@ -1,4 +1,4 @@
-import { actionType, City } from '../../constant.js';
+import { ActionType, City } from '../constant.js';
 
 const initialState = {
   city: City.AMSTERDAM,
@@ -6,7 +6,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case actionType.CHANGE_CITY:
+    case ActionType.CHANGE_CITY:
       return {
         ...state,
         city: action.payload,
