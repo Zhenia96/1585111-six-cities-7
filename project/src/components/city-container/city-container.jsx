@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import CityHotels from '../city-hotels/city-hotels.jsx';
 import CityEmpty from '../city-empty/city-empty.jsx';
 import PropTypes from 'prop-types';
-import MapMain from '../map-main/map-main.jsx';
+import HotelsMapMain from '../hotels-map-main/hotels-map-main.jsx';
 
 export default function CityContainer({ hotels, city, onCardMouseOver, activeHotel, changeEmptyStatus }) {
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function CityContainer({ hotels, city, onCardMouseOver, activeHot
         <CityEmpty />}
       <div className="cities__right-section">
         {hotels.length ?
-          <MapMain hotels={hotels} activeHotel={activeHotel} /> :
+          <HotelsMapMain hotels={hotels} activeHotel={activeHotel} /> :
           ''}
       </div>
     </div>
