@@ -38,3 +38,11 @@ export const SortType = {
   PRICE_HIGH_TO_LOW: 'Price: high to low',
   RAITING_HIGH_TO_LOW: 'Top rated first',
 };
+
+export const ServerPath = {
+  HOTELS: '/hotels',
+  FAVORITE: '/favorite',
+  COMMENTS: '/comments',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};

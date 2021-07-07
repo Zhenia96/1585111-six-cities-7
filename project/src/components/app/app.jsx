@@ -6,8 +6,15 @@ import SignInPage from '../sign-in-page/sign-in-page.jsx';
 import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default function App(props) {
+function mapStateToProps(state) {
+  return {
+    hotels: state.hotels,
+  };
+}
+
+function App(props) {
   const { hotels, reviews, user } = props;
 
   return (
@@ -41,3 +48,5 @@ App.propTypes = {
   reviews: PropTypes.array,
   user: PropTypes.object,
 };
+
+export default connect(mapStateToProps)(App);
