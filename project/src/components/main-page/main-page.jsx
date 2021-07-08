@@ -6,6 +6,7 @@ import { City } from '../../constant.js';
 import { sortHotels } from '../../utils/common.js';
 import { actionCreator } from '../../store/action.js';
 import { connect } from 'react-redux';
+import LoadingScreen from '../loading-screen/loading-screen.jsx';
 
 function setActiveClass(checkedCity, city) {
   return checkedCity === city ? 'tabs__item--active' : '';
@@ -19,6 +20,7 @@ function mapStateToProps(state) {
   return {
     city: state.city,
     sortType: state.sortType,
+    hotelsLoadingStatus: state.hotelsLoadingStatus,
   };
 }
 
@@ -30,7 +32,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function MainPage({ hotels, user, city, onChangeCity, sortType }) {
+function MainPage({ hotels, user, city, onChangeCity, sortType, hotelsLoadingStatus }) {
 
   const [activeHotel, setActiveHotel] = useState(null);
   const [emptyStatus, setEmptyStatus] = useState(false);
@@ -86,7 +88,9 @@ function MainPage({ hotels, user, city, onChangeCity, sortType }) {
           </section>
         </div>
         <div className="cities">
-          <CityContainer hotels={sortHotels(filteredHotels, sortType)} city={city} onCardMouseOver={setActiveHotel} activeHotel={activeHotel} changeEmptyStatus={setEmptyStatus} />
+          {hotelsLoadingStatus ?
+            <CityContainer hotels={sortHotels(filteredHotels, sortType)} city={city} onCardMouseOver={setActiveHotel} activeHotel={activeHotel} changeEmptyStatus={setEmptyStatus} /> :
+            <LoadingScreen />}
         </div>
       </main>
     </div>);
@@ -98,6 +102,7 @@ MainPage.propTypes = {
   city: PropTypes.string.isRequired,
   onChangeCity: PropTypes.func.isRequired,
   sortType: PropTypes.string.isRequired,
+  hotelsLoadingStatus: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

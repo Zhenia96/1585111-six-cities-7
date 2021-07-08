@@ -13,4 +13,8 @@ export const actionCreator = {
     type: ActionType.CHANGE_SORT_TYPE,
     payload: sortType,
   }),
+  changeHotelsLoadingStatus: (hotelsLoadingStatus) => ({
+    type: ActionType.CHANGE_HOTELS_LOADING_STATUS,
+    payload: hotelsLoadingStatus,
+  }),
 };

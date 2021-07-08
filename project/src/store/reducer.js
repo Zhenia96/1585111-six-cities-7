@@ -4,6 +4,7 @@ const initialState = {
   city: City.AMSTERDAM,
   sortType: SortType.POPULAR,
   hotels: [],
+  hotelsLoadingStatus: false,
 };
 
 export default function reducer(state = initialState, action) {
@@ -22,6 +23,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         hotels: action.payload,
+      };
+    case ActionType.CHANGE_HOTELS_LOADING_STATUS:
+      return {
+        ...state,
+        hotelsLoadingStatus: action.payload,
       };
     default:
       return state;

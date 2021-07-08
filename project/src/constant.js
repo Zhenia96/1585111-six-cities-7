@@ -21,6 +21,7 @@ export const ActionType = {
   CHANGE_CITY: 'changeCity',
   CHANGE_HOTELS: 'changeHotels',
   CHANGE_SORT_TYPE: 'changeSortType',
+  CHANGE_HOTELS_LOADING_STATUS: 'changeHotelsLoadingStatus',
 };
 
 export const City = {
