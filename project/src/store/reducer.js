@@ -1,7 +1,7 @@
 import { ActionType, City, SortType } from '../constant.js';
 
 const initialState = {
-  city: City.AMSTERDAM,
+  city: City.PARIS,
   sortType: SortType.POPULAR,
   hotels: [],
   hotelsLoadingStatus: false,

@@ -1,6 +1,6 @@
 export function adaptHotelToClient(hotel) {
   return {
-    bedrooms: hotel.badrooms,
+    bedrooms: hotel.bedrooms,
     city: hotel.city,
     description: hotel.description,
     goods: hotel.goods,

@@ -26,7 +26,7 @@ function getCityLocation(hotels) {
   };
 }
 
-export default function Map({ hotels, activeHotel }) {
+export default function HotelsMap({ hotels, activeHotel }) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, getCityLocation(hotels));
 
@@ -56,7 +56,7 @@ export default function Map({ hotels, activeHotel }) {
 }
 
 
-Map.propTypes = {
+HotelsMap.propTypes = {
   hotels: PropTypes.array.isRequired,
   activeHotel: PropTypes.object,
 };
