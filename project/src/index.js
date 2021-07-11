@@ -9,10 +9,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import createApi from './services/api';
 import { apiActionCreator } from './store/api-action';
+import { actionCreator } from './store/action';
 
 const REVIEWS_COUNT = 5;
 
-const api = createApi();
+const api = createApi(() => store.dispatch(actionCreator.logout()));
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 

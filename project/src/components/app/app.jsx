@@ -7,6 +7,8 @@ import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { browserHistory } from '../../browser-history.js';
+import PrivateRoute from '../private-route/private-route.jsx';
 
 function mapStateToProps(state) {
   return {
@@ -21,11 +23,20 @@ function App(props) {
     <BrowserRouter>
       <Switch>
         <Route path={AppPath.MAIN} exact>
-          <MainPage hotels={hotels} user={user} />
+          <MainPage hotels={hotels} />
         </Route>
         <Route path={AppPath.LOGIN} exact>
           <SignInPage />
         </Route>
+        <PrivateRoute
+          exact
+          path={AppPath.FAVORITES}
+          render={() => (
+            <FavoritesPage
+              hotels={hotels} user={user}
+            />
+          )}
+        />
         <Route path={AppPath.FAVORITES} exact>
           <FavoritesPage hotels={hotels} user={user} />
         </Route>

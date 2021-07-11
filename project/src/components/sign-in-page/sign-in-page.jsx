@@ -1,10 +1,32 @@
 import React, { useState } from 'react';
-import { AppPath } from '../../constant.js';
-import { Link } from 'react-router-dom';
+import { AppPath, AuthorizationStatus } from '../../constant.js';
+import { Link, Redirect } from 'react-router-dom';
+import { apiActionCreator } from '../../store/api-action';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import PageHeader from '../page-header/page-header.jsx';
 
-export default function SignInPage() {
+function mapDispatchToProps(dispatch) {
+  return {
+    onSubmit: (email, password) => (
+      dispatch(apiActionCreator.login({ email, password }))
+    ),
+  };
+}
+
+function mapStateToProps(state) {
+  return {
+    authorizationStatus: state.authorizationStatus,
+  };
+}
+
+function SignInPage({ onSubmit, authorizationStatus }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return <Redirect to={AppPath.MAIN} />;
+  }
 
   function handleEmailChange({ target }) {
     setEmail(target.value);
@@ -14,30 +36,14 @@ export default function SignInPage() {
     setPassword(target.value);
   }
 
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onSubmit(email, password);
+  }
+
   return (
     <div className="page page--gray page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__login">Sign in</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <PageHeader />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
@@ -52,7 +58,7 @@ export default function SignInPage() {
                 <label className="visually-hidden">Password</label>
                 <input className="login__input form__input" type="password" name="password" placeholder="Password" required="" value={password} onChange={handlePasswordChange} />
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button className="login__submit form__submit button" type="submit" onClick={handleSubmit}>Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
@@ -67,3 +73,10 @@ export default function SignInPage() {
     </div>
   );
 }
+
+SignInPage.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInPage);

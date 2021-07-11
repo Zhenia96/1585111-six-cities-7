@@ -32,7 +32,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function MainPage({ hotels, user, city, onChangeCity, sortType, hotelsLoadingStatus }) {
+function MainPage({ hotels, city, onChangeCity, sortType, hotelsLoadingStatus }) {
 
   const [activeHotel, setActiveHotel] = useState(null);
   const [emptyStatus, setEmptyStatus] = useState(false);
@@ -48,7 +48,7 @@ function MainPage({ hotels, user, city, onChangeCity, sortType, hotelsLoadingSta
 
   return (
     <div className="page page--gray page--main">
-      <PageHeader user={user} />
+      <PageHeader />
       <main className={`page__main page__main--index ${!emptyStatus ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -98,7 +98,6 @@ function MainPage({ hotels, user, city, onChangeCity, sortType, hotelsLoadingSta
 
 MainPage.propTypes = {
   hotels: PropTypes.array.isRequired,
-  user: PropTypes.object,
   city: PropTypes.string.isRequired,
   onChangeCity: PropTypes.func.isRequired,
   sortType: PropTypes.string.isRequired,

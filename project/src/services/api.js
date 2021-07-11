@@ -1,13 +1,34 @@
 import axios from 'axios';
+import { ResponseStatus } from '../constant.js';
 
 const BASE_URL = 'https://7.react.pages.academy/six-cities';
 const TIMEOUT = 5000;
 
-export default function createApi() {
+const token = localStorage.getItem('token') ?? '';
+
+export default function createApi(onUnauthorized) {
   const api = axios.create({
     baseURL: BASE_URL,
     timeout: TIMEOUT,
+    headers: {
+      'X-Token': token,
+    },
   });
+
+  function onSuccess(response) {
+    return response;
+  }
+
+  function onFail(err) {
+    const { response } = err;
+    if (response.status === ResponseStatus.NO_AUTH) {
+      onUnauthorized();
+    }
+    return err;
+  }
+
+
+  api.interceptors.response.use(onSuccess, onFail);
 
   return api;
 }

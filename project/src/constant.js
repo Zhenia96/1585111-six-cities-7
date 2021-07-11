@@ -22,6 +22,8 @@ export const ActionType = {
   CHANGE_HOTELS: 'changeHotels',
   CHANGE_SORT_TYPE: 'changeSortType',
   CHANGE_HOTELS_LOADING_STATUS: 'changeHotelsLoadingStatus',
+  LOGIN: 'login',
+  LOGOUT: 'logout',
 };
 
 export const City = {
@@ -46,4 +48,17 @@ export const ServerPath = {
   COMMENTS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
+};
+
+export const AuthorizationStatus = {
+  NO_AUTH: 'noAuth',
+  AUTH: 'auth',
+  UNKNOWN: 'unknown',
+};
+
+
+export const ResponseStatus = {
+  OK: 200,
+  BAD: 400,
+  NO_AUTH: 401,
 };

@@ -1,10 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppPath } from '../../constant.js';
+import { AppPath, AuthorizationStatus } from '../../constant.js';
 import PropTypes from 'prop-types';
+import { apiActionCreator } from '../../store/api-action';
+import { connect } from 'react-redux';
+import NavigationLogged from '../navigation-logged/navigation-logged.jsx';
+import NavigationNotLogged from '../navigation-not-logged/navigation-not-logged.jsx';
 
-export default function PageHeader({ user }) {
-  const { email } = user;
+function mapDispatchToProps(dispatch) {
+  return {
+    onSubmit: (email, password) => (
+      dispatch(apiActionCreator.login({ email, password }))
+    ),
+  };
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+    authorizationStatus: state.authorizationStatus,
+  };
+}
+
+function PageHeader({ user, authorizationStatus }) {
   return (
     <header className="header">
       <div className="container">
@@ -14,22 +32,9 @@ export default function PageHeader({ user }) {
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
             </Link>
           </div>
-          <nav className="header__nav">
-            <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <Link className="header__nav-link header__nav-link--profile" to={AppPath.FAVORITES}>
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
-                  <span className="header__user-name user__name">{email}</span>
-                </Link>
-              </li>
-              <li className="header__nav-item">
-                <Link className="header__nav-link" to={AppPath.MAIN}>
-                  <span className="header__signout">Sign out</span>
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          {authorizationStatus === AuthorizationStatus.AUTH ?
+            <NavigationLogged user={user} /> :
+            <NavigationNotLogged />}
         </div>
       </div>
     </header>
@@ -37,8 +42,8 @@ export default function PageHeader({ user }) {
 }
 
 PageHeader.propTypes = {
-  user: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-  }),
+  user: PropTypes.object,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
+export default connect(mapStateToProps, mapDispatchToProps)(PageHeader);
