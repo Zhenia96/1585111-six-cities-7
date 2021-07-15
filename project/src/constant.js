@@ -1,3 +1,5 @@
+export const SHOWN_REVIEWS_COUNT = 10;
+
 export const CardType = {
   FAVORITES: 'favorites',
   CITIES: 'cities',
@@ -24,6 +26,7 @@ export const ActionType = {
   CHANGE_HOTELS_LOADING_STATUS: 'changeHotelsLoadingStatus',
   LOGIN: 'login',
   LOGOUT: 'logout',
+  SET_ERROR: 'setError',
 };
 
 export const City = {

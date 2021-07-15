@@ -63,3 +63,25 @@ export function sortHotels(hotels, sortType) {
       return hotels;
   }
 }
+
+export function sortReviews(reviews) {
+  return reviews.sort((firstReview, secondReviea) => {
+
+    if (firstReview.date.unix() > secondReviea.date.unix()) {
+      return -1;
+    }
+
+    if (firstReview.date.unix() < secondReviea.date.unix()) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
+export function sliceReviews(reviews, maxCount) {
+  let slicedReviews = reviews;
+  if (reviews.length >= maxCount) {
+    slicedReviews = reviews.slice(0, maxCount);
+  }
+  return slicedReviews;
+}

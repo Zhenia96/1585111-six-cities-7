@@ -7,7 +7,6 @@ import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { browserHistory } from '../../browser-history.js';
 import PrivateRoute from '../private-route/private-route.jsx';
 
 function mapStateToProps(state) {
@@ -17,7 +16,7 @@ function mapStateToProps(state) {
 }
 
 function App(props) {
-  const { hotels, reviews, user } = props;
+  const { hotels, api } = props;
 
   return (
     <BrowserRouter>
@@ -33,15 +32,15 @@ function App(props) {
           path={AppPath.FAVORITES}
           render={() => (
             <FavoritesPage
-              hotels={hotels} user={user}
+              hotels={hotels}
             />
           )}
         />
         <Route path={AppPath.FAVORITES} exact>
-          <FavoritesPage hotels={hotels} user={user} />
+          <FavoritesPage hotels={hotels} />
         </Route>
         <Route path={`${AppPath.OFFER}/:id`} exact>
-          <RoomPage hotels={hotels} reviews={reviews} user={user} />
+          <RoomPage hotels={hotels} api={api} />
         </Route>
         <Route>
           <React.Fragment>
@@ -56,8 +55,7 @@ function App(props) {
 
 App.propTypes = {
   hotels: PropTypes.array.isRequired,
-  reviews: PropTypes.array,
-  user: PropTypes.object,
+  api: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps)(App);

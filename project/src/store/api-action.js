@@ -19,6 +19,7 @@ export const apiActionCreator = {
     try {
       response = await api.post(ServerPath.LOGIN, { email, password });
       localStorage.setItem('token', response.data.token);
+      api.defaults.headers['X-Token'] = response.data.token;
       dispatch(actionCreator.login(adaptAuthInfoToClient(response.data)));
     } catch (error) {
       return error;
@@ -28,6 +29,7 @@ export const apiActionCreator = {
     try {
       await api.delete(ServerPath.LOGOUT);
       localStorage.removeItem('token');
+      api.defaults.headers['X-Token'] = '';
       dispatch(actionCreator.logout());
     } catch (error) {
       return error;
@@ -37,16 +39,11 @@ export const apiActionCreator = {
     let response;
     try {
       response = await api.get(ServerPath.LOGIN);
-
-      switch (response.status) {
-        case ResponseStatus.OK:
-          dispatch(actionCreator.login(adaptAuthInfoToClient(response.data)));
-          return;
-        default:
-          dispatch(actionCreator.logout());
+      if (response.status === ResponseStatus.OK) {
+        dispatch(actionCreator.login(adaptAuthInfoToClient(response.data)));
       }
     } catch (error) {
-      return error;
+      dispatch(actionCreator.logout());
     }
   },
 };

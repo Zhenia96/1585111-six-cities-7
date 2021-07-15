@@ -1,3 +1,5 @@
+import { createDate } from './common';
+
 export function adaptHotelToClient(hotel) {
   return {
     bedrooms: hotel.bedrooms,
@@ -32,27 +34,27 @@ export function adaptHotelsToClient(hotels) {
   return adaptedHotels;
 }
 
-export function adaptCommentToClient(comment) {
+export function adaptReviewToClient(review) {
   return {
-    comment: comment.comment,
-    date: comment.date,
-    id: comment.id,
-    rating: comment.rating,
+    comment: review.comment,
+    date: createDate(review.date),
+    id: review.id,
+    rating: review.rating,
     user: {
-      avatarUrl: comment.user.avatar_url,
-      id: comment.user.id,
-      isPro: comment.user.is_pro,
-      name: comment.user.name,
+      avatarUrl: review.user.avatar_url,
+      id: review.user.id,
+      isPro: review.user.is_pro,
+      name: review.user.name,
     },
   };
 }
 
-export function adaptCommentsToClient(comments) {
-  const adaptedComments = [];
-  comments.forEach((comment) => {
-    adaptedComments.push(adaptCommentToClient(comment));
+export function adaptReviewsToClient(reviews) {
+  const adaptedReviews = [];
+  reviews.forEach((review) => {
+    adaptedReviews.push(adaptReviewToClient(review));
   });
-  return adaptedComments;
+  return adaptedReviews;
 }
 
 export function adaptAuthInfoToClient(authInfo) {

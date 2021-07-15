@@ -1,7 +1,10 @@
 import React from 'react';
+import './style.css';
 
 export default function LoadingScreen() {
   return (
-    <p>Loading ...</p>
+    <div className='loading'>
+      <p className='loading__text'>Loading ...</p>
+    </div>
   );
 }

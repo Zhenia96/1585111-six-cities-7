@@ -1,0 +1,12 @@
+.loading {
+  width: 100%;
+  height: 100%;
+}
+
+.loading__text {
+  width: 100%;
+  margin-top: 20%;
+  text-align: center;
+  font-size: 19px;
+  font-style: oblique;
+}

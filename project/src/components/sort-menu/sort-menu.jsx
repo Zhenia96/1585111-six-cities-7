@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function HotelsSorting({ sortType, onChangeSortType }) {
+function SortMenu({ sortType, onChangeSortType }) {
   const [showStatus, setShowStatus] = useState(false);
 
   function handleSortMenuClick() {
@@ -59,9 +59,9 @@ function HotelsSorting({ sortType, onChangeSortType }) {
   );
 }
 
-HotelsSorting.propTypes = {
+SortMenu.propTypes = {
   sortType: PropTypes.string.isRequired,
   onChangeSortType: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HotelsSorting);
+export default connect(mapStateToProps, mapDispatchToProps)(SortMenu);
