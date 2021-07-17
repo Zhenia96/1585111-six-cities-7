@@ -6,24 +6,41 @@ import SignInPage from '../sign-in-page/sign-in-page.jsx';
 import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PrivateRoute from '../private-route/private-route.jsx';
 
-export default function App(props) {
-  const { hotels, reviews, user } = props;
+function mapStateToProps(state) {
+  return {
+    hotels: state.hotels,
+  };
+}
+
+function App(props) {
+  const { hotels, api } = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppPath.MAIN} exact>
-          <MainPage hotels={hotels} user={user} />
+          <MainPage hotels={hotels} />
         </Route>
         <Route path={AppPath.LOGIN} exact>
           <SignInPage />
         </Route>
+        <PrivateRoute
+          exact
+          path={AppPath.FAVORITES}
+          render={() => (
+            <FavoritesPage
+              hotels={hotels}
+            />
+          )}
+        />
         <Route path={AppPath.FAVORITES} exact>
-          <FavoritesPage hotels={hotels} user={user} />
+          <FavoritesPage hotels={hotels} />
         </Route>
         <Route path={`${AppPath.OFFER}/:id`} exact>
-          <RoomPage hotels={hotels} reviews={reviews} user={user} />
+          <RoomPage hotels={hotels} api={api} />
         </Route>
         <Route>
           <React.Fragment>
@@ -38,6 +55,7 @@ export default function App(props) {
 
 App.propTypes = {
   hotels: PropTypes.array.isRequired,
-  reviews: PropTypes.array,
-  user: PropTypes.object,
+  api: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps)(App);

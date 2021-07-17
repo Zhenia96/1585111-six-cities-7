@@ -16,6 +16,9 @@ export default function useMap(mapRef, city) {
 
       setMap(instance);
     }
+    else {
+      map.setView(city.center, city.zoom);
+    }
   }, [map, mapRef, city]);
 
   return map;

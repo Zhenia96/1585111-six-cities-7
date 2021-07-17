@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceCard from '../place-card/place-card';
 import { CardType } from '../../constant.js';
 import PropTypes from 'prop-types';
-import HotelsSorting from '../hotels-sorting/hotels-sorting.jsx';
+import SortMenu from '../sort-menu/sort-menu.jsx';
 
 
 export default function CityHotels({ hotels, city, onCardMouseOver }) {
@@ -11,7 +11,7 @@ export default function CityHotels({ hotels, city, onCardMouseOver }) {
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">{hotelsCount} places to stay in {city}</b>
-      <HotelsSorting></HotelsSorting>
+      <SortMenu></SortMenu>
       <div className="cities__places-list places__list tabs__content">
         {(hotels.map((hotel) => (<PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.CITIES} onCardMouseOver={onCardMouseOver}></PlaceCard>)))}
       </div>

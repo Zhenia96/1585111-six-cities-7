@@ -1,3 +1,5 @@
+export const SHOWN_REVIEWS_COUNT = 10;
+
 export const CardType = {
   FAVORITES: 'favorites',
   CITIES: 'cities',
@@ -21,6 +23,10 @@ export const ActionType = {
   CHANGE_CITY: 'changeCity',
   CHANGE_HOTELS: 'changeHotels',
   CHANGE_SORT_TYPE: 'changeSortType',
+  CHANGE_HOTELS_LOADING_STATUS: 'changeHotelsLoadingStatus',
+  LOGIN: 'login',
+  LOGOUT: 'logout',
+  SET_ERROR: 'setError',
 };
 
 export const City = {
@@ -37,4 +43,25 @@ export const SortType = {
   PRICE_LOW_TO_HIGH: 'Price: low to high',
   PRICE_HIGH_TO_LOW: 'Price: high to low',
   RAITING_HIGH_TO_LOW: 'Top rated first',
+};
+
+export const ServerPath = {
+  HOTELS: '/hotels',
+  FAVORITE: '/favorite',
+  COMMENTS: '/comments',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
+
+export const AuthorizationStatus = {
+  NO_AUTH: 'noAuth',
+  AUTH: 'auth',
+  UNKNOWN: 'unknown',
+};
+
+
+export const ResponseStatus = {
+  OK: 200,
+  BAD: 400,
+  NO_AUTH: 401,
 };
