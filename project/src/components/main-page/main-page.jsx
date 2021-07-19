@@ -5,7 +5,7 @@ import PageHeader from '../page-header/page-header.jsx';
 import { City } from '../../constant.js';
 import { sortHotels } from '../../utils/common.js';
 import { changeCity } from '../../store/action.js';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import { getCity, getSortType } from '../../store/other/selectors';
 import { getHotelsLoadingStatus } from '../../store/hotels/selectors';
@@ -15,36 +15,27 @@ function setActiveClass(checkedCity, city) {
 }
 
 function filterHotels(hotels, city) {
+  console.log('фильтрую отели');
   return hotels.filter((hotel) => hotel.city.name === city);
 }
 
-function mapStateToProps(state) {
-  return {
-    city: getCity(state),
-    sortType: getSortType(state),
-    hotelsLoadingStatus: getHotelsLoadingStatus(state),
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onChangeCity: (city) => (
-      dispatch(changeCity(city))
-    ),
-  };
-}
-
-function MainPage({ hotels, city, onChangeCity, sortType, hotelsLoadingStatus }) {
+export default function MainPage({ hotels }) {
 
   const [activeHotel, setActiveHotel] = useState(null);
   const [emptyStatus, setEmptyStatus] = useState(false);
+
+  const city = useSelector(getCity);
+  const sortType = useSelector(getSortType);
+  const hotelsLoadingStatus = useSelector(getHotelsLoadingStatus);
+
+  const dispatch = useDispatch();
 
   const filteredHotels = filterHotels(hotels, city);
 
   function handleCityChange(evt) {
     evt.preventDefault();
     if (!evt.target.children.length) {
-      onChangeCity(evt.target.textContent);
+      dispatch(changeCity(evt.target.textContent));
     }
   }
 
@@ -100,10 +91,5 @@ function MainPage({ hotels, city, onChangeCity, sortType, hotelsLoadingStatus })
 
 MainPage.propTypes = {
   hotels: PropTypes.array.isRequired,
-  city: PropTypes.string.isRequired,
-  onChangeCity: PropTypes.func.isRequired,
-  sortType: PropTypes.string.isRequired,
-  hotelsLoadingStatus: PropTypes.bool.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

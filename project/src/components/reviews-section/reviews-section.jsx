@@ -5,22 +5,18 @@ import { ServerPath, AuthorizationStatus, SHOWN_REVIEWS_COUNT } from '../../cons
 import { adaptReviewsToClient } from '../../utils/adapter';
 import { sortReviews, sliceReviews } from '../../utils/common';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ErrorScreen from '../error-screen/error-screen';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 
 const ERROR_MESSAGE = 'Error';
 const ERROR_TIMEOUT = 5000;
 
-function mapStateToProps(state) {
-  return {
-    authorizationStatus: getAuthorizationStatus(state),
-  };
-}
-
-function ReviewsSection({ id, api, authorizationStatus }) {
+export default function ReviewsSection({ id, api }) {
   const [reviews, setReviews] = useState([]);
   const [isError, setIsError] = useState(false);
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   useEffect(() => {
     let isUnmount = false;
@@ -57,7 +53,4 @@ function ReviewsSection({ id, api, authorizationStatus }) {
 ReviewsSection.propTypes = {
   id: PropTypes.string.isRequired,
   api: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
 };
-
-export default connect(mapStateToProps)(ReviewsSection);

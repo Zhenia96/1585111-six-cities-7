@@ -6,18 +6,14 @@ import SignInPage from '../sign-in-page/sign-in-page.jsx';
 import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PrivateRoute from '../private-route/private-route.jsx';
 import { getHotels } from '../../store/hotels/selectors';
 
-function mapStateToProps(state) {
-  return {
-    hotels: getHotels(state),
-  };
-}
 
-function App(props) {
-  const { hotels, api } = props;
+export default function App(props) {
+  const hotels = useSelector(getHotels);
+  const { api } = props;
 
   return (
     <BrowserRouter>
@@ -55,8 +51,5 @@ function App(props) {
 }
 
 App.propTypes = {
-  hotels: PropTypes.array.isRequired,
   api: PropTypes.func.isRequired,
 };
-
-export default connect(mapStateToProps)(App);

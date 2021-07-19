@@ -2,30 +2,19 @@ import React, { useState } from 'react';
 import { AppPath, AuthorizationStatus } from '../../constant.js';
 import { Link, Redirect } from 'react-router-dom';
 import { apiActionCreator } from '../../store/api-action';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import PageHeader from '../page-header/page-header.jsx';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { getCity } from '../../store/other/selectors';
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onSubmit: (email, password) => (
-      dispatch(apiActionCreator.login({ email, password }))
-    ),
-  };
-}
-
-function mapStateToProps(state) {
-  return {
-    authorizationStatus: getAuthorizationStatus(state),
-    city: getCity(state),
-  };
-}
-
-function SignInPage({ onSubmit, authorizationStatus, city }) {
+export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const city = useSelector(getCity);
+
+  const dispatch = useDispatch();
 
   if (authorizationStatus === AuthorizationStatus.AUTH) {
     return <Redirect to={AppPath.MAIN} />;
@@ -42,7 +31,7 @@ function SignInPage({ onSubmit, authorizationStatus, city }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     if (password.trim() && email.trim()) {
-      onSubmit(email, password);
+      dispatch(apiActionCreator.login({ email, password }));
     }
   }
 
@@ -78,11 +67,3 @@ function SignInPage({ onSubmit, authorizationStatus, city }) {
     </div>
   );
 }
-
-SignInPage.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  city: PropTypes.string.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignInPage);

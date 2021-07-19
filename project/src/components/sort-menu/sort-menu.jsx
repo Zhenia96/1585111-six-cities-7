@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { SortType } from '../../constant.js';
 import { changeSortType } from '../../store/action.js';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { getSortType } from '../../store/other/selectors';
 
 const SORT_OPTION_ACTIVE = 'places__option--active';
@@ -12,22 +11,12 @@ function setOptionActiveClass(sortType, currentSortType) {
   return sortType === currentSortType ? SORT_OPTION_ACTIVE : '';
 }
 
-function mapStateToProps(state) {
-  return {
-    sortType: getSortType(state),
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onChangeSortType: (sortType) => (
-      dispatch(changeSortType(sortType))
-    ),
-  };
-}
-
-function SortMenu({ sortType, onChangeSortType }) {
+export default function SortMenu() {
   const [showStatus, setShowStatus] = useState(false);
+
+  const sortType = useSelector(getSortType);
+
+  const dispatch = useDispatch();
 
   function handleSortMenuClick() {
     return setShowStatus(!showStatus);
@@ -36,7 +25,7 @@ function SortMenu({ sortType, onChangeSortType }) {
   function handleOptionsClick(evt) {
     evt.preventDefault();
     if (!evt.target.children.length) {
-      onChangeSortType(evt.target.textContent);
+      dispatch(changeSortType(evt.target.textContent));
     }
     setShowStatus(!showStatus);
   }
@@ -59,10 +48,3 @@ function SortMenu({ sortType, onChangeSortType }) {
     </form>
   );
 }
-
-SortMenu.propTypes = {
-  sortType: PropTypes.string.isRequired,
-  onChangeSortType: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SortMenu);

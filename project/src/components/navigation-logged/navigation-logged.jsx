@@ -3,18 +3,16 @@ import { Link } from 'react-router-dom';
 import { AppPath } from '../../constant.js';
 import PropTypes from 'prop-types';
 import { apiActionCreator } from '../../store/api-action.js';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onSignOut: (evt) => {
-      evt.preventDefault();
-      dispatch(apiActionCreator.logout());
-    },
-  };
-}
+export default function NavigationLogged({ user }) {
+  const dispatch = useDispatch();
 
-function NavigationLogged({ user, onSignOut }) {
+  function handleSignOutClick(evt) {
+    evt.preventDefault();
+    dispatch(apiActionCreator.logout());
+  }
+
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -26,7 +24,7 @@ function NavigationLogged({ user, onSignOut }) {
           </Link>
         </li>
         <li className="header__nav-item">
-          <a className="header__nav-link" onClick={onSignOut} href='/'>
+          <a className="header__nav-link" onClick={handleSignOutClick} href='/'>
             <span className="header__signout">Sign out</span>
           </a>
         </li>
@@ -39,7 +37,4 @@ NavigationLogged.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string.isRequired,
   }),
-  onSignOut: PropTypes.func.isRequired,
 };
-
-export default connect(null, mapDispatchToProps)(NavigationLogged);
