@@ -6,6 +6,7 @@ import { apiActionCreator } from '../../store/api-action';
 import { connect } from 'react-redux';
 import NavigationLogged from '../navigation-logged/navigation-logged.jsx';
 import NavigationNotLogged from '../navigation-not-logged/navigation-not-logged.jsx';
+import { getUser, getAuthorizationStatus } from '../../store/user/selectors';
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -17,8 +18,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
-    authorizationStatus: state.authorizationStatus,
+    user: getUser(state),
+    authorizationStatus: getAuthorizationStatus(state),
   };
 }
 

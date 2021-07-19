@@ -4,9 +4,11 @@ import CityContainer from '../city-container/city-container.jsx';
 import PageHeader from '../page-header/page-header.jsx';
 import { City } from '../../constant.js';
 import { sortHotels } from '../../utils/common.js';
-import { actionCreator } from '../../store/action.js';
+import { changeCity } from '../../store/action.js';
 import { connect } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
+import { getCity, getSortType } from '../../store/other/selectors';
+import { getHotelsLoadingStatus } from '../../store/hotels/selectors';
 
 function setActiveClass(checkedCity, city) {
   return checkedCity === city ? 'tabs__item--active' : '';
@@ -18,16 +20,16 @@ function filterHotels(hotels, city) {
 
 function mapStateToProps(state) {
   return {
-    city: state.city,
-    sortType: state.sortType,
-    hotelsLoadingStatus: state.hotelsLoadingStatus,
+    city: getCity(state),
+    sortType: getSortType(state),
+    hotelsLoadingStatus: getHotelsLoadingStatus(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onChangeCity: (city) => (
-      dispatch(actionCreator.changeCity(city))
+      dispatch(changeCity(city))
     ),
   };
 }
@@ -39,7 +41,7 @@ function MainPage({ hotels, city, onChangeCity, sortType, hotelsLoadingStatus })
 
   const filteredHotels = filterHotels(hotels, city);
 
-  function changeCity(evt) {
+  function handleCityChange(evt) {
     evt.preventDefault();
     if (!evt.target.children.length) {
       onChangeCity(evt.target.textContent);
@@ -53,7 +55,7 @@ function MainPage({ hotels, city, onChangeCity, sortType, hotelsLoadingStatus })
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list" onClick={changeCity}>
+            <ul className="locations__list tabs__list" onClick={handleCityChange}>
               <li className="locations__item">
                 <a className={`locations__item-link tabs__item ${setActiveClass(city, City.PARIS)}`} href="/">
                   <span>Paris</span>

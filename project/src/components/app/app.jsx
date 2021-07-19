@@ -8,10 +8,11 @@ import RoomPage from '../room-page/room-page.jsx';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PrivateRoute from '../private-route/private-route.jsx';
+import { getHotels } from '../../store/hotels/selectors';
 
 function mapStateToProps(state) {
   return {
-    hotels: state.hotels,
+    hotels: getHotels(state),
   };
 }
 

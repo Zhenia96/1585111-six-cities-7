@@ -5,6 +5,8 @@ import { apiActionCreator } from '../../store/api-action';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import PageHeader from '../page-header/page-header.jsx';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { getCity } from '../../store/other/selectors';
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -16,8 +18,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    authorizationStatus: state.authorizationStatus,
-    city: state.city,
+    authorizationStatus: getAuthorizationStatus(state),
+    city: getCity(state),
   };
 }
 

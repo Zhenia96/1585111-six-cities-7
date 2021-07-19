@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { SortType } from '../../constant.js';
-import { actionCreator } from '../../store/action.js';
+import { changeSortType } from '../../store/action.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getSortType } from '../../store/other/selectors';
 
 const SORT_OPTION_ACTIVE = 'places__option--active';
 const SORT_OPTIONS_OPENED = 'places__options--opened';
@@ -13,14 +14,14 @@ function setOptionActiveClass(sortType, currentSortType) {
 
 function mapStateToProps(state) {
   return {
-    sortType: state.sortType,
+    sortType: getSortType(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onChangeSortType: (sortType) => (
-      dispatch(actionCreator.changeSortType(sortType))
+      dispatch(changeSortType(sortType))
     ),
   };
 }

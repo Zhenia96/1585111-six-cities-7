@@ -65,3 +65,9 @@ export const ResponseStatus = {
   BAD: 400,
   NO_AUTH: 401,
 };
+
+export const NameSpace = {
+  USER: 'user',
+  OTHER: 'other',
+  HOTELS: 'hotels',
+};

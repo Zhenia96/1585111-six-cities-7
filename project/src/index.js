@@ -2,17 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import reducer from './store/reducer.js';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+import { rootReducer } from './store/root-reducer.js';
 import createApi from './services/api';
 import { apiActionCreator } from './store/api-action';
-import { actionCreator } from './store/action';
+import { logout } from './store/action';
+import { configureStore } from '@reduxjs/toolkit';
 
-const api = createApi(() => store.dispatch(actionCreator.logout()));
+const api = createApi(() => store.dispatch(logout()));
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }),
+});
 
 store.dispatch(apiActionCreator.getHotels());
 store.dispatch(apiActionCreator.getAuthorizationStatus());

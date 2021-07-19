@@ -1,15 +1,15 @@
 import { ServerPath, ResponseStatus } from '../constant.js';
-import { actionCreator } from './action.js';
+import { changeHotelsLoadingStatus, changeHotels, logout, login } from './action.js';
 import { adaptHotelsToClient, adaptAuthInfoToClient } from '../utils/adapter.js';
 
 export const apiActionCreator = {
   getHotels: () => async (dispatch, getState, api) => {
-    dispatch(actionCreator.changeHotelsLoadingStatus(false));
+    dispatch(changeHotelsLoadingStatus(false));
     let response;
     try {
       response = await api.get(ServerPath.HOTELS);
-      dispatch(actionCreator.changeHotels(adaptHotelsToClient(response.data)));
-      dispatch(actionCreator.changeHotelsLoadingStatus(true));
+      dispatch(changeHotels(adaptHotelsToClient(response.data)));
+      dispatch(changeHotelsLoadingStatus(true));
     } catch (error) {
       return error;
     }
@@ -20,7 +20,7 @@ export const apiActionCreator = {
       response = await api.post(ServerPath.LOGIN, { email, password });
       localStorage.setItem('token', response.data.token);
       api.defaults.headers['X-Token'] = response.data.token;
-      dispatch(actionCreator.login(adaptAuthInfoToClient(response.data)));
+      dispatch(login(adaptAuthInfoToClient(response.data)));
     } catch (error) {
       return error;
     }
@@ -30,7 +30,7 @@ export const apiActionCreator = {
       await api.delete(ServerPath.LOGOUT);
       localStorage.removeItem('token');
       api.defaults.headers['X-Token'] = '';
-      dispatch(actionCreator.logout());
+      dispatch(logout());
     } catch (error) {
       return error;
     }
@@ -40,10 +40,10 @@ export const apiActionCreator = {
     try {
       response = await api.get(ServerPath.LOGIN);
       if (response.status === ResponseStatus.OK) {
-        dispatch(actionCreator.login(adaptAuthInfoToClient(response.data)));
+        dispatch(login(adaptAuthInfoToClient(response.data)));
       }
     } catch (error) {
-      dispatch(actionCreator.logout());
+      dispatch(logout());
     }
   },
 };

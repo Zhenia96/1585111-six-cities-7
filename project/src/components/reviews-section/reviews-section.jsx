@@ -7,13 +7,14 @@ import { sortReviews, sliceReviews } from '../../utils/common';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ErrorScreen from '../error-screen/error-screen';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
 const ERROR_MESSAGE = 'Error';
 const ERROR_TIMEOUT = 5000;
 
 function mapStateToProps(state) {
   return {
-    authorizationStatus: state.authorizationStatus,
+    authorizationStatus: getAuthorizationStatus(state),
   };
 }
 
