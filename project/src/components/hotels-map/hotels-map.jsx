@@ -3,8 +3,10 @@ import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useMap from '../../hooks/use-map';
+import { useSelector } from 'react-redux';
+import { getSortedHotels } from '../../store/hotels/selectors';
 
-function getIcon(isActive = false) {
+function getIcon(isActive) {
   const iconUrl = isActive ? 'img/pin-active.svg' : 'img/pin.svg';
   return Leaflet.icon({
     iconUrl,
@@ -26,26 +28,19 @@ function getCityLocation(hotels) {
   };
 }
 
-export default function HotelsMap({ hotels, activeHotel }) {
+export default function HotelsMap({ activeHotel }) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, getCityLocation(hotels));
 
-  useEffect(() => {
-    if (map && activeHotel) {
-      const { location } = activeHotel;
-      const isActiveCard = true;
-      Leaflet.marker([location.latitude, location.longitude], { icon: getIcon(isActiveCard) }).addTo(map);
-    }
-  }, [activeHotel, map]);
+  const hotels = useSelector(getSortedHotels);
+
+  const map = useMap(mapRef, getCityLocation(hotels));
 
   useEffect(() => {
     if (map) {
       hotels.forEach((hotel) => {
         const { location } = hotel;
-        const isActiveCard = false;
-        if (hotel !== activeHotel) {
-          Leaflet.marker([location.latitude, location.longitude], { icon: getIcon(isActiveCard) }).addTo(map);
-        }
+        const isActiveCard = activeHotel ? hotel.id === activeHotel.id : false;
+        Leaflet.marker([location.latitude, location.longitude], { icon: getIcon(isActiveCard) }).addTo(map);
       });
     }
   }, [activeHotel, map, hotels]);
@@ -55,8 +50,6 @@ export default function HotelsMap({ hotels, activeHotel }) {
   );
 }
 
-
 HotelsMap.propTypes = {
-  hotels: PropTypes.array.isRequired,
   activeHotel: PropTypes.object,
 };

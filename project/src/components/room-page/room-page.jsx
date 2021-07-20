@@ -121,7 +121,7 @@ export default function RoomPage({ hotels, api }) {
             </div>
           </div>
           <section className="property__map map">
-            <HotelsMap hotels={hotels} activeHotel={hotel} />
+            <HotelsMap activeHotel={hotel} />
           </section>
         </section>
         <div className="container">

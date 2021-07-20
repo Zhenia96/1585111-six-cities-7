@@ -13,6 +13,7 @@ import { getHotels } from '../../store/hotels/selectors';
 
 export default function App(props) {
   const hotels = useSelector(getHotels);
+
   const { api } = props;
 
   return (

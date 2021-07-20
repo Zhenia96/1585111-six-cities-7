@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppPath, AuthorizationStatus } from '../../constant.js';
 import { useSelector } from 'react-redux';
@@ -6,7 +6,7 @@ import NavigationLogged from '../navigation-logged/navigation-logged.jsx';
 import NavigationNotLogged from '../navigation-not-logged/navigation-not-logged.jsx';
 import { getUser, getAuthorizationStatus } from '../../store/user/selectors';
 
-export default function PageHeader() {
+function PageHeader() {
   const user = useSelector(getUser);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
@@ -27,3 +27,5 @@ export default function PageHeader() {
     </header>
   );
 }
+
+export default memo(PageHeader);

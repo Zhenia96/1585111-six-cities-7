@@ -64,6 +64,10 @@ export function sortHotels(hotels, sortType) {
   }
 }
 
+export function filterHotels(hotels, city) {
+  return hotels.filter((hotel) => hotel.city.name === city);
+}
+
 export function sortReviews(reviews) {
   return reviews.sort((firstReview, secondReviea) => {
 

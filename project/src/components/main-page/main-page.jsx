@@ -1,36 +1,30 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
 import CityContainer from '../city-container/city-container.jsx';
 import PageHeader from '../page-header/page-header.jsx';
 import { City } from '../../constant.js';
-import { sortHotels } from '../../utils/common.js';
 import { changeCity } from '../../store/action.js';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
-import { getCity, getSortType } from '../../store/other/selectors';
-import { getHotelsLoadingStatus } from '../../store/hotels/selectors';
+import { getCity } from '../../store/other/selectors';
+import { getHotelsLoadingStatus, getSortedHotels } from '../../store/hotels/selectors';
 
 function setActiveClass(checkedCity, city) {
   return checkedCity === city ? 'tabs__item--active' : '';
 }
 
-function filterHotels(hotels, city) {
-  console.log('фильтрую отели');
-  return hotels.filter((hotel) => hotel.city.name === city);
-}
-
-export default function MainPage({ hotels }) {
-
+export default function MainPage() {
   const [activeHotel, setActiveHotel] = useState(null);
   const [emptyStatus, setEmptyStatus] = useState(false);
 
   const city = useSelector(getCity);
-  const sortType = useSelector(getSortType);
   const hotelsLoadingStatus = useSelector(getHotelsLoadingStatus);
+  const hotels = useSelector(getSortedHotels);
 
   const dispatch = useDispatch();
 
-  const filteredHotels = filterHotels(hotels, city);
+  const handleCardMouseOver = useCallback(setActiveHotel, [setActiveHotel]);
+  const handleEmptyStatusChange = useCallback(setEmptyStatus, [setEmptyStatus]);
+
 
   function handleCityChange(evt) {
     evt.preventDefault();
@@ -82,14 +76,9 @@ export default function MainPage({ hotels }) {
         </div>
         <div className="cities">
           {hotelsLoadingStatus ?
-            <CityContainer hotels={sortHotels(filteredHotels, sortType)} city={city} onCardMouseOver={setActiveHotel} activeHotel={activeHotel} changeEmptyStatus={setEmptyStatus} /> :
+            <CityContainer hotels={hotels} city={city} onCardMouseOver={handleCardMouseOver} activeHotel={activeHotel} changeEmptyStatus={handleEmptyStatusChange} /> :
             <LoadingScreen />}
         </div>
       </main>
     </div>);
 }
-
-MainPage.propTypes = {
-  hotels: PropTypes.array.isRequired,
-};
-
