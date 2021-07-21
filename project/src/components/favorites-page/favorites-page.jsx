@@ -1,35 +1,51 @@
-import { AppPath } from '../../constant.js';
-import React from 'react';
+import { AppPath, ServerPath } from '../../constant.js';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import FavoritesCity from '../favorites-city/favorites-city.jsx';
 import PageHeader from '../page-header/page-header.jsx';
+import LoadingScreen from '../loading-screen/loading-screen.jsx';
+import FavoritesContent from '../favorites-content/favorites-content.jsx';
+import FavoritesContentEmpty from '../favorites-content-empty/favorites-content-empty.jsx';
+import { adaptHotelsToClient } from '../../utils/adapter';
 
-function getUnicCities(hotels) {
-  const unicCities = new Set();
-  hotels.forEach((hotel) => {
-    if (hotel.isFavorite) {
-      unicCities.add(hotel.city.name);
-    }
-  });
-  return unicCities;
-}
 
-export default function FavoritesPage({ hotels, user }) {
-  const unicCities = Array.from(getUnicCities(hotels).values());
+export default function FavoritesPage({ api }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hotels, setHotels] = useState([]);
+
+  useEffect(() => {
+    let isUnmount = false;
+    setIsLoaded(false);
+    api.get(ServerPath.FAVORITE)
+      .then((response) => {
+        if (!isUnmount) {
+          const adaptedHotels = adaptHotelsToClient(response.data);
+          setHotels(adaptedHotels);
+          setIsLoaded(true);
+        }
+      })
+      .catch(() => {
+        if (!isUnmount) {
+          setIsLoaded(true);
+        }
+      });
+
+    return () => isUnmount = true;
+  }, [api, setHotels, setIsLoaded]);
+
+  if (!isLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="page">
-      <PageHeader user={user} />
+      <PageHeader />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {unicCities.map((city) => <FavoritesCity key={`id-${city}`} hotels={hotels} city={city}></FavoritesCity>)}
-            </ul>
-          </section>
+          {hotels.length ?
+            <FavoritesContent hotels={hotels} /> :
+            <FavoritesContentEmpty />}
         </div>
       </main>
       <footer className="footer container">
@@ -42,6 +58,6 @@ export default function FavoritesPage({ hotels, user }) {
 }
 
 FavoritesPage.propTypes = {
-  hotels: PropTypes.array.isRequired,
-  user: PropTypes.object,
+  api: PropTypes.func.isRequired,
 };
+

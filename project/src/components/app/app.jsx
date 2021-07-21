@@ -30,13 +30,10 @@ export default function App(props) {
           path={AppPath.FAVORITES}
           render={() => (
             <FavoritesPage
-              hotels={hotels}
+              api={api}
             />
           )}
         />
-        <Route path={AppPath.FAVORITES} exact>
-          <FavoritesPage hotels={hotels} />
-        </Route>
         <Route path={`${AppPath.OFFER}/:id`} exact>
           <RoomPage hotels={hotels} api={api} />
         </Route>
