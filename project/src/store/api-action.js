@@ -2,48 +2,46 @@ import { ServerPath, ResponseStatus } from '../constant.js';
 import { changeHotelsLoadingStatus, changeHotels, logout, login } from './action.js';
 import { adaptHotelsToClient, adaptAuthInfoToClient } from '../utils/adapter.js';
 
-export const apiActionCreator = {
-  getHotels: () => async (dispatch, getState, api) => {
-    dispatch(changeHotelsLoadingStatus(false));
-    let response;
-    try {
-      response = await api.get(ServerPath.HOTELS);
+export const getHotels = () => (dispatch, getState, api) => {
+  dispatch(changeHotelsLoadingStatus(false));
+  api.get(ServerPath.HOTELS)
+    .then((response) => {
       dispatch(changeHotels(adaptHotelsToClient(response.data)));
       dispatch(changeHotelsLoadingStatus(true));
-    } catch (error) {
-      return error;
-    }
-  },
-  login: ({ email, password }) => async (dispatch, getState, api) => {
-    let response;
-    try {
-      response = await api.post(ServerPath.LOGIN, { email, password });
+    })
+    .catch((err) => err);
+};
+
+
+export const signIn = ({ email, password }) => (dispatch, getState, api) => {
+  api.post(ServerPath.LOGIN, { email, password })
+    .then((response) => {
       localStorage.setItem('token', response.data.token);
       api.defaults.headers['X-Token'] = response.data.token;
       dispatch(login(adaptAuthInfoToClient(response.data)));
-    } catch (error) {
-      return error;
-    }
-  },
-  logout: () => async (dispatch, getState, api) => {
-    try {
-      await api.delete(ServerPath.LOGOUT);
+      dispatch(getHotels());
+    })
+    .catch((err) => err);
+};
+
+export const signOut = () => (dispatch, getState, api) => {
+  api.delete(ServerPath.LOGOUT)
+    .then((response) => {
       localStorage.removeItem('token');
       api.defaults.headers['X-Token'] = '';
       dispatch(logout());
-    } catch (error) {
-      return error;
-    }
-  },
-  getAuthorizationStatus: () => async (dispatch, getState, api) => {
-    let response;
-    try {
-      response = await api.get(ServerPath.LOGIN);
+    })
+    .catch((err) => err);
+};
+
+export const checkAuthorizationStatus = () => (dispatch, getState, api) => {
+  api.get(ServerPath.LOGIN)
+    .then((response) => {
       if (response.status === ResponseStatus.OK) {
         dispatch(login(adaptAuthInfoToClient(response.data)));
       }
-    } catch (error) {
+    })
+    .catch((err) => {
       dispatch(logout());
-    }
-  },
+    });
 };

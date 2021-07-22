@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppPath, AuthorizationStatus } from '../../constant.js';
 import { Link, Redirect } from 'react-router-dom';
-import { apiActionCreator } from '../../store/api-action';
+import { signIn } from '../../store/api-action';
 import { useDispatch, useSelector } from 'react-redux';
 import PageHeader from '../page-header/page-header.jsx';
 import { getAuthorizationStatus } from '../../store/user/selectors';
@@ -31,7 +31,7 @@ export default function SignInPage() {
   function handleSubmit(evt) {
     evt.preventDefault();
     if (password.trim() && email.trim()) {
-      dispatch(apiActionCreator.login({ email, password }));
+      dispatch(signIn({ email, password }));
     }
   }
 

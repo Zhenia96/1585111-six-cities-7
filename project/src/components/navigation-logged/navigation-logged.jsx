@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppPath } from '../../constant.js';
 import PropTypes from 'prop-types';
-import { apiActionCreator } from '../../store/api-action.js';
+import { signOut } from '../../store/api-action.js';
 import { useDispatch } from 'react-redux';
 
 export default function NavigationLogged({ user }) {
@@ -10,7 +10,7 @@ export default function NavigationLogged({ user }) {
 
   function handleSignOutClick(evt) {
     evt.preventDefault();
-    dispatch(apiActionCreator.logout());
+    dispatch(signOut());
   }
 
   return (

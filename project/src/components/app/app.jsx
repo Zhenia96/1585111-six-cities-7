@@ -6,13 +6,9 @@ import SignInPage from '../sign-in-page/sign-in-page.jsx';
 import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import PrivateRoute from '../private-route/private-route.jsx';
-import { getHotels } from '../../store/hotels/selectors';
-
 
 export default function App(props) {
-  const hotels = useSelector(getHotels);
 
   const { api } = props;
 
@@ -20,7 +16,7 @@ export default function App(props) {
     <BrowserRouter>
       <Switch>
         <Route path={AppPath.MAIN} exact>
-          <MainPage hotels={hotels} />
+          <MainPage api={api} />
         </Route>
         <Route path={AppPath.LOGIN} exact>
           <SignInPage />
@@ -35,7 +31,7 @@ export default function App(props) {
           )}
         />
         <Route path={`${AppPath.OFFER}/:id`} exact>
-          <RoomPage hotels={hotels} api={api} />
+          <RoomPage api={api} />
         </Route>
         <Route>
           <React.Fragment>

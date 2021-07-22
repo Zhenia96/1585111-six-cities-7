@@ -3,7 +3,7 @@ export const SHOWN_REVIEWS_COUNT = 10;
 export const CardType = {
   FAVORITES: 'favorites',
   CITIES: 'cities',
-  NEAR: 'near',
+  NEAR: 'near-places',
 };
 
 export const DateFormat = {
@@ -22,11 +22,13 @@ export const AppPath = {
 export const ActionType = {
   CHANGE_CITY: 'changeCity',
   CHANGE_HOTELS: 'changeHotels',
+  CHANGE_FAVORITE_STATUS: 'changeFavoriteStatus',
   CHANGE_SORT_TYPE: 'changeSortType',
   CHANGE_HOTELS_LOADING_STATUS: 'changeHotelsLoadingStatus',
   LOGIN: 'login',
   LOGOUT: 'logout',
   SET_ERROR: 'setError',
+  REDIRECT_TO_LOGIN: 'redirectToLogin',
 };
 
 export const City = {
@@ -70,4 +72,9 @@ export const NameSpace = {
   USER: 'user',
   OTHER: 'other',
   HOTELS: 'hotels',
+};
+
+export const ClassName = {
+  PROPERTY: 'property',
+  PLACE_CARD: 'place-card',
 };

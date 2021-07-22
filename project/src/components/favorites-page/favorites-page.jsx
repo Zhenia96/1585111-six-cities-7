@@ -13,6 +13,7 @@ export default function FavoritesPage({ api }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hotels, setHotels] = useState([]);
 
+
   useEffect(() => {
     let isUnmount = false;
     setIsLoaded(false);
@@ -44,7 +45,7 @@ export default function FavoritesPage({ api }) {
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           {hotels.length ?
-            <FavoritesContent hotels={hotels} /> :
+            <FavoritesContent hotels={hotels} api={api} /> :
             <FavoritesContentEmpty />}
         </div>
       </main>

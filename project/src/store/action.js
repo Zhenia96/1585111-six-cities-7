@@ -13,6 +13,10 @@ export const changeHotels = createAction(ActionType.CHANGE_HOTELS, (hotels) => (
   payload: hotels,
 }));
 
+export const changeFavoriteStatus = createAction(ActionType.CHANGE_FAVORITE_STATUS, (id) => ({
+  payload: id,
+}));
+
 export const changeHotelsLoadingStatus = createAction(ActionType.CHANGE_HOTELS_LOADING_STATUS, (loadingStatus) => ({
   payload: loadingStatus,
 }));

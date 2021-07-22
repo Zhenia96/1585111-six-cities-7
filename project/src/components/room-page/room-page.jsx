@@ -1,5 +1,5 @@
 import { getPercentageRating, getTextWithCapitalFirstLetter } from '../../utils/common.js';
-import { AppPath, ServerPath } from '../../constant.js';
+import { AppPath, ServerPath, ClassName } from '../../constant.js';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import RoomImage from '../room-image/room-image.jsx';
@@ -13,8 +13,9 @@ import HotelsMap from '../hotels-map/hotels-map.jsx';
 import ReviewsSection from '../reviews-section/reviews-section.jsx';
 import { adaptHotelToClient } from '../../utils/adapter';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
+import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 
-export default function RoomPage({ hotels, api }) {
+export default function RoomPage({ api }) {
   const [hotel, setHotel] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
@@ -65,12 +66,7 @@ export default function RoomPage({ hotels, api }) {
                 <h1 className="property__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button className={`property__bookmark-button ${hotel.isFavorite ? 'property__bookmark-button--active' : ''} button`} type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BookmarkButton parentClassName={ClassName.PROPERTY} id={hotel.id} isFavorite={hotel.isFavorite} api={api} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -136,6 +132,5 @@ export default function RoomPage({ hotels, api }) {
 }
 
 RoomPage.propTypes = {
-  hotels: PropTypes.arrayOf(PropTypes.object).isRequired,
   api: PropTypes.func.isRequired,
 };

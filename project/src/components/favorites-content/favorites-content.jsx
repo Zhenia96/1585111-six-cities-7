@@ -12,14 +12,14 @@ function getUnicCities(hotels) {
   return unicCities;
 }
 
-export default function FavoritesContent({ hotels }) {
+export default function FavoritesContent({ hotels, api }) {
   const unicCities = Array.from(getUnicCities(hotels).values());
 
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        {unicCities.map((city) => <FavoritesCity key={`id-${city}`} hotels={hotels} city={city}></FavoritesCity>)}
+        {unicCities.map((city) => <FavoritesCity key={`id-${city}`} hotels={hotels} city={city} api={api}></FavoritesCity>)}
       </ul>
     </section>
   );
@@ -27,4 +27,5 @@ export default function FavoritesContent({ hotels }) {
 
 FavoritesContent.propTypes = {
   hotels: PropTypes.array.isRequired,
+  api: PropTypes.func.isRequired,
 };

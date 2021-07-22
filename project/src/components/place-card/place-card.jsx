@@ -1,19 +1,20 @@
-import { AppPath, CardType } from '../../constant.js';
+import { AppPath, CardType, ClassName } from '../../constant.js';
 import { getPercentageRating, getTextWithCapitalFirstLetter } from '../../utils/common.js';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PremiumMark from '../premium-mark/premium-mark.jsx';
+import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 
-export default function PlaceCard({ hotel, cardType, onCardMouseOver }) {
-  const { isFavorite, isPremium, previewImage, price, rating, title, type } = hotel;
+export default function PlaceCard({ hotel, cardType, onCardMouseOver, api }) {
+  const { isFavorite, isPremium, previewImage, price, rating, title, type, id } = hotel;
 
   function handleCardMouseOver() {
     return (cardType === CardType.CITIES) ? onCardMouseOver(hotel) : false;
   }
 
   return (
-    <article className={`${cardType}__place-card place-card`} onMouseOver={handleCardMouseOver}>
+    <article className={`${cardType}__${cardType === CardType.CITIES ? 'place-card' : 'card'} place-card`} onMouseOver={handleCardMouseOver}>
       {isPremium ? <PremiumMark /> : ''}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
         <Link to={'#'}>
@@ -26,12 +27,7 @@ export default function PlaceCard({ hotel, cardType, onCardMouseOver }) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <BookmarkButton parentClassName={ClassName.PLACE_CARD} id={id} isFavorite={isFavorite} api={api} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -61,4 +57,5 @@ PlaceCard.propTypes = {
   }),
   cardType: PropTypes.string.isRequired,
   onCardMouseOver: PropTypes.func,
+  api: PropTypes.func.isRequired,
 };

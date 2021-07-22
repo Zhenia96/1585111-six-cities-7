@@ -39,7 +39,7 @@ export default function NearestHotels({ id, api }) {
 
   return (
     <div className="near-places__list places__list">
-      {hotels.map((hotel) => <PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.NEAR}></PlaceCard>)}
+      {hotels.map((hotel) => <PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.NEAR} api={api}></PlaceCard>)}
     </div>
   );
 }

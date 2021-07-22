@@ -4,7 +4,7 @@ import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { rootReducer } from './store/root-reducer.js';
 import createApi from './services/api';
-import { apiActionCreator } from './store/api-action';
+import { getHotels, checkAuthorizationStatus } from './store/api-action';
 import { logout } from './store/action';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -20,8 +20,8 @@ const store = configureStore({
     }),
 });
 
-store.dispatch(apiActionCreator.getHotels());
-store.dispatch(apiActionCreator.getAuthorizationStatus());
+store.dispatch(getHotels());
+store.dispatch(checkAuthorizationStatus());
 
 ReactDOM.render(
   <React.StrictMode>

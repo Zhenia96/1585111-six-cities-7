@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import SortMenu from '../sort-menu/sort-menu.jsx';
 
 
-export default function CityHotels({ hotels, city, onCardMouseOver }) {
+export default function CityHotels({ hotels, city, onCardMouseOver, api }) {
   const hotelsCount = hotels.length;
   return (
     <section className="cities__places places">
@@ -13,7 +13,7 @@ export default function CityHotels({ hotels, city, onCardMouseOver }) {
       <b className="places__found">{hotelsCount} places to stay in {city}</b>
       <SortMenu></SortMenu>
       <div className="cities__places-list places__list tabs__content">
-        {(hotels.map((hotel) => (<PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.CITIES} onCardMouseOver={onCardMouseOver}></PlaceCard>)))}
+        {(hotels.map((hotel) => (<PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.CITIES} onCardMouseOver={onCardMouseOver} api={api}></PlaceCard>)))}
       </div>
     </section>
   );
@@ -23,4 +23,5 @@ CityHotels.propTypes = {
   hotels: PropTypes.array.isRequired,
   city: PropTypes.string.isRequired,
   onCardMouseOver: PropTypes.func.isRequired,
+  api: PropTypes.func.isRequired,
 };

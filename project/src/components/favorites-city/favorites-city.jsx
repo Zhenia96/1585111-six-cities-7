@@ -3,13 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 
-function getFavoriteCard(hotel, city) {
+function getFavoriteCard(hotel, city, api) {
   if (hotel.city.name === city && hotel.isFavorite) {
-    return <PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.FAVORITES} ></PlaceCard>;
+    return <PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.FAVORITES} api={api} ></PlaceCard >;
   }
 }
 
-export default function FavoritesCity({ hotels, city }) {
+export default function FavoritesCity({ hotels, city, api }) {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -20,7 +20,7 @@ export default function FavoritesCity({ hotels, city }) {
         </div>
       </div>
       <div className="favorites__places">
-        {hotels.map((hotel) => getFavoriteCard(hotel, city))}
+        {hotels.map((hotel) => getFavoriteCard(hotel, city, api))}
       </div>
     </li>
   );
@@ -29,4 +29,5 @@ export default function FavoritesCity({ hotels, city }) {
 FavoritesCity.propTypes = {
   hotels: PropTypes.array.isRequired,
   city: PropTypes.string.isRequired,
+  api: PropTypes.func.isRequired,
 };
