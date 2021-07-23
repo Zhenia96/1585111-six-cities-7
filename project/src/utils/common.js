@@ -4,7 +4,6 @@ import { SortType } from '../constant.js';
 
 dayjs.extend(customParseFormat);
 
-
 const MAX_RATING = 5;
 
 export function getPercentageRating(rating) {

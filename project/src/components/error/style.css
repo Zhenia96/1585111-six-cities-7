@@ -1,0 +1,14 @@
+.error {
+  width: 50%;
+  height: 50px;
+  position: fixed;
+  margin: 0 25%;
+  z-index: 1000;
+}
+
+.error__text {
+  text-align: center;
+  color: red;
+}
+
+

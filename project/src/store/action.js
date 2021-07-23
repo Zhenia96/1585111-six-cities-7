@@ -26,3 +26,7 @@ export const login = createAction(ActionType.LOGIN, (user) => ({
 }));
 
 export const logout = createAction(ActionType.LOGOUT);
+
+export const setErrorMessage = createAction(ActionType.SET_ERROR_MESSAGE, (message) => ({
+  payload: message,
+}));

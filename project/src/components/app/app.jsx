@@ -5,8 +5,9 @@ import MainPage from '../main-page/main-page.jsx';
 import SignInPage from '../sign-in-page/sign-in-page.jsx';
 import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route.jsx';
+import ErrorPage from '../error-page/error-page.jsx';
 
 export default function App(props) {
 
@@ -34,10 +35,7 @@ export default function App(props) {
           <RoomPage api={api} />
         </Route>
         <Route>
-          <React.Fragment>
-            <h1>Error 404</h1>
-            <Link to={AppPath.MAIN}>Go to main page</Link>
-          </React.Fragment>
+          <ErrorPage />
         </Route>
       </Switch>
     </BrowserRouter>

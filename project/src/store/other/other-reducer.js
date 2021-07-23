@@ -1,10 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSortType } from '../action';
+import { changeCity, changeSortType, setErrorMessage } from '../action';
 import { City, SortType } from '../../constant.js';
 
 const initialState = {
   city: City.PARIS,
   sortType: SortType.POPULAR,
+  errorMessage: '',
 };
 
 export const otherReducer = createReducer(initialState, (builder) => {
@@ -14,5 +15,8 @@ export const otherReducer = createReducer(initialState, (builder) => {
     }))
     .addCase(changeSortType, ((state, action) => {
       state.sortType = action.payload;
+    }))
+    .addCase(setErrorMessage, ((state, action) => {
+      state.errorMessage = action.payload;
     }));
 });

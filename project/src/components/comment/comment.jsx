@@ -3,10 +3,6 @@ import { ServerPath, SHOWN_REVIEWS_COUNT } from '../../constant';
 import { adaptReviewsToClient } from '../../utils/adapter';
 import { sortReviews, sliceReviews } from '../../utils/common';
 import PropTypes from 'prop-types';
-import ErrorScreen from '../error-screen/error-screen';
-
-const ERROR_MESSAGE = 'Error. Review has not been sent :(';
-const ERROR_TIMEOUT = 2000;
 
 const DEFAULT_RATING = 0;
 const DEFAULT_MESSAGE = '';
@@ -40,7 +36,6 @@ export default function Comment({ id, api, resetReviews }) {
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
   const [isLoaded, setIsLoaded] = useState(true);
-  const [isError, setIsError] = useState(false);
 
   function handleRatingChange({ target }) {
     setRating(target.value);
@@ -66,14 +61,9 @@ export default function Comment({ id, api, resetReviews }) {
         })
         .catch(() => {
           setIsLoaded(true);
-          setIsError(true);
-          setTimeout(() => setIsError(false), ERROR_TIMEOUT);
+
         });
     }
-  }
-
-  if (isError) {
-    return (<ErrorScreen errorMessage={ERROR_MESSAGE} />);
   }
 
   return (

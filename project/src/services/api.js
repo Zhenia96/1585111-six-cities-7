@@ -6,7 +6,7 @@ const TIMEOUT = 5000;
 
 const token = localStorage.getItem('token') ?? '';
 
-export default function createApi(onUnauthorized) {
+export default function createApi(onUnauthorized, onError) {
   const api = axios.create({
     baseURL: BASE_URL,
     timeout: TIMEOUT,
@@ -23,6 +23,8 @@ export default function createApi(onUnauthorized) {
     const { response } = err;
     if (response.status === ResponseStatus.NO_AUTH) {
       onUnauthorized();
+    } else {
+      onError(response.statusText);
     }
     return err;
   }

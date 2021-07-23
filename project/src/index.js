@@ -5,10 +5,11 @@ import { Provider } from 'react-redux';
 import { rootReducer } from './store/root-reducer.js';
 import createApi from './services/api';
 import { getHotels, checkAuthorizationStatus } from './store/api-action';
-import { logout } from './store/action';
+import { logout, setErrorMessage } from './store/action';
 import { configureStore } from '@reduxjs/toolkit';
+import Error from './components/error/error';
 
-const api = createApi(() => store.dispatch(logout()));
+const api = createApi(() => store.dispatch(logout()), (message) => store.dispatch(setErrorMessage(message)));
 
 const store = configureStore({
   reducer: rootReducer,
@@ -26,6 +27,7 @@ store.dispatch(checkAuthorizationStatus());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <Error />
       <App api={api} />
     </Provider>
   </React.StrictMode>,
