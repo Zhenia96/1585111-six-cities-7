@@ -110,9 +110,9 @@ export default function Comment({ id, api, resetReviews }) {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" onClick={handleSubmit} disabled={!isLoaded}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" onClick={handleSubmit} disabled={!(isLoaded && isCommentValid(rating, message))}>Submit</button>
       </div>
-    </form>
+    </form >
   );
 }
 
