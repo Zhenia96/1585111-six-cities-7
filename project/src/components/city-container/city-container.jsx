@@ -16,7 +16,7 @@ export default function CityContainer({ hotels, city, onCardMouseOver, activeHot
         <CityNoHotels city={city} />}
       <div className="cities__right-section">
         {hotels.length ?
-          <HotelsMapMain activeHotel={activeHotel} /> :
+          <HotelsMapMain activeHotel={activeHotel} hotels={hotels} /> :
           ''}
       </div>
     </div>

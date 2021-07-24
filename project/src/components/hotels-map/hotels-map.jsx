@@ -3,8 +3,6 @@ import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useMap from '../../hooks/use-map';
-import { useSelector } from 'react-redux';
-import { getSortedHotels } from '../../store/hotels/selectors';
 
 function getIcon(isActive) {
   const iconUrl = isActive ? 'img/pin-active.svg' : 'img/pin.svg';
@@ -28,10 +26,8 @@ function getCityLocation(hotels) {
   };
 }
 
-export default function HotelsMap({ activeHotel }) {
+export default function HotelsMap({ activeHotel, hotels }) {
   const mapRef = useRef(null);
-
-  const hotels = useSelector(getSortedHotels);
 
   const map = useMap(mapRef, getCityLocation(hotels));
 
@@ -52,4 +48,5 @@ export default function HotelsMap({ activeHotel }) {
 
 HotelsMap.propTypes = {
   activeHotel: PropTypes.object,
+  hotels: PropTypes.array.isRequired,
 };

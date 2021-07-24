@@ -10,13 +10,24 @@ import PageHeader from '../page-header/page-header.jsx';
 import { Redirect, useParams } from 'react-router-dom';
 import HotelsMap from '../hotels-map/hotels-map.jsx';
 import ReviewsSection from '../reviews-section/reviews-section.jsx';
-import { adaptHotelToClient } from '../../utils/adapter';
+import { adaptHotelToClient, adaptHotelsToClient } from '../../utils/adapter';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 import RoomGallery from '../room-gallery/room-gallery.jsx';
 
+const MAX_SHOWN_HOTELS = 3;
+
+function sliceHotels(hotels, maxCount) {
+  if (hotels.length > maxCount) {
+    return hotels.slice(0, maxCount);
+  }
+
+  return hotels;
+}
+
 export default function RoomPage({ api }) {
   const [hotel, setHotel] = useState(null);
+  const [nearestHotels, setNearestHotels] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
 
@@ -40,6 +51,25 @@ export default function RoomPage({ api }) {
 
     return () => isUnmount = true;
   }, [api, id, setHotel, setIsLoaded]);
+
+  useEffect(() => {
+    let isUnmount = false;
+    api.get(`${ServerPath.HOTELS}/${id}/nearby`)
+      .then((response) => {
+        if (!isUnmount) {
+          const adaptedHotels = adaptHotelsToClient(response.data);
+          const slicedHotels = sliceHotels(adaptedHotels, MAX_SHOWN_HOTELS);
+          setNearestHotels(slicedHotels);
+        }
+      })
+      .catch(() => {
+        if (!isUnmount) {
+          setNearestHotels([]);
+        }
+      });
+    return () => isUnmount = true;
+  }, [api, id, setNearestHotels]);
+
 
   if (!isLoaded) {
     return <LoadingScreen />;
@@ -115,13 +145,15 @@ export default function RoomPage({ api }) {
             </div>
           </div>
           <section className="property__map map">
-            <HotelsMap activeHotel={hotel} />
+            {nearestHotels.length ?
+              <HotelsMap activeHotel={hotel} hotels={[...nearestHotels, hotel]} /> :
+              ''}
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearestHotels id={id} api={api} />
+            <NearestHotels id={id} api={api} nearestHotels={nearestHotels} />
           </section>
         </div>
       </main>
