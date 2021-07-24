@@ -2,7 +2,6 @@ import { getPercentageRating, getTextWithCapitalFirstLetter } from '../../utils/
 import { AppPath, ServerPath, ClassName } from '../../constant.js';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import RoomImage from '../room-image/room-image.jsx';
 import RoomGood from '../room-good/room-good.jsx';
 import PremiumMark from '../premium-mark/premium-mark.jsx';
 import NearestHotels from '../nearest-hotels/nearest-hotels.jsx';
@@ -14,6 +13,7 @@ import ReviewsSection from '../reviews-section/reviews-section.jsx';
 import { adaptHotelToClient } from '../../utils/adapter';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
+import RoomGallery from '../room-gallery/room-gallery.jsx';
 
 export default function RoomPage({ api }) {
   const [hotel, setHotel] = useState(null);
@@ -55,9 +55,7 @@ export default function RoomPage({ api }) {
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <div className="property__gallery">
-              {hotel.images.map((image) => <RoomImage key={`id-${image}`} image={image} />)}
-            </div>
+            <RoomGallery images={hotel.images} />
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
