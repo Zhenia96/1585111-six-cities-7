@@ -89,7 +89,7 @@ export default function RoomPage({ api }) {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {hotel.isPremium ? <PremiumMark /> : ''}
+              {hotel.isPremium ? <PremiumMark parentClassName={ClassName.PROPERTY} /> : ''}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   Beautiful &amp; luxurious studio at great location
