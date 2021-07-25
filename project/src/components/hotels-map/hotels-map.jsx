@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useMap from '../../hooks/use-map';
+import { hotelProps } from '../../utils/prop-validation';
 
 function getIcon(isActive) {
   const iconUrl = isActive ? 'img/pin-active.svg' : 'img/pin.svg';
@@ -47,6 +48,6 @@ export default function HotelsMap({ activeHotel, hotels }) {
 }
 
 HotelsMap.propTypes = {
-  activeHotel: PropTypes.object,
-  hotels: PropTypes.array.isRequired,
+  activeHotel: hotelProps,
+  hotels: PropTypes.arrayOf(hotelProps).isRequired,
 };

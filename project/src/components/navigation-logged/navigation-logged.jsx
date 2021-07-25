@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppPath } from '../../constant.js';
-import PropTypes from 'prop-types';
 import { signOut } from '../../store/api-action.js';
 import { useDispatch } from 'react-redux';
+import { userProps } from '../../utils/prop-validation';
 
 export default function NavigationLogged({ user }) {
   const dispatch = useDispatch();
@@ -34,7 +34,5 @@ export default function NavigationLogged({ user }) {
 }
 
 NavigationLogged.propTypes = {
-  user: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-  }),
+  user: userProps,
 };

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PremiumMark from '../premium-mark/premium-mark.jsx';
 import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
+import { hotelProps } from '../../utils/prop-validation';
 
 export default function PlaceCard({ hotel, cardType, onCardMouseOver, api }) {
   const { isFavorite, isPremium, previewImage, price, rating, title, type, id } = hotel;
@@ -45,16 +46,7 @@ export default function PlaceCard({ hotel, cardType, onCardMouseOver, api }) {
 }
 
 PlaceCard.propTypes = {
-  hotel: PropTypes.shape({
-    isFavorite: PropTypes.bool.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  }),
+  hotel: hotelProps,
   cardType: PropTypes.string.isRequired,
   onCardMouseOver: PropTypes.func,
   api: PropTypes.func.isRequired,

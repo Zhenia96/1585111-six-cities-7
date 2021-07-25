@@ -3,6 +3,7 @@ import PlaceCard from '../place-card/place-card';
 import { CardType } from '../../constant.js';
 import PropTypes from 'prop-types';
 import SortMenu from '../sort-menu/sort-menu.jsx';
+import { hotelProps } from '../../utils/prop-validation';
 
 
 export default function CityHotels({ hotels, city, onCardMouseOver, api }) {
@@ -20,7 +21,7 @@ export default function CityHotels({ hotels, city, onCardMouseOver, api }) {
 }
 
 CityHotels.propTypes = {
-  hotels: PropTypes.array.isRequired,
+  hotels: PropTypes.arrayOf(hotelProps).isRequired,
   city: PropTypes.string.isRequired,
   onCardMouseOver: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,

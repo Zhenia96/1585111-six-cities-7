@@ -3,6 +3,7 @@ import CityHotels from '../city-hotels/city-hotels.jsx';
 import CityNoHotels from '../city-no-hotels/city-no-hotels.jsx';
 import PropTypes from 'prop-types';
 import HotelsMapMain from '../hotels-map-main/hotels-map-main.jsx';
+import { hotelProps } from '../../utils/prop-validation.js';
 
 export default function CityContainer({ hotels, city, onCardMouseOver, activeHotel, changeEmptyStatus, api }) {
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function CityContainer({ hotels, city, onCardMouseOver, activeHot
 }
 
 CityContainer.propTypes = {
-  hotels: PropTypes.array.isRequired,
+  hotels: PropTypes.arrayOf(hotelProps).isRequired,
   city: PropTypes.string,
   onCardMouseOver: PropTypes.func.isRequired,
   activeHotel: PropTypes.object,

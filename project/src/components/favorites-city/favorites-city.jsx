@@ -2,6 +2,7 @@ import { CardType } from '../../constant.js';
 import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
+import { hotelProps } from '../../utils/prop-validation';
 
 function getFavoriteCard(hotel, city, api) {
   if (hotel.city.name === city && hotel.isFavorite) {
@@ -27,7 +28,7 @@ export default function FavoritesCity({ hotels, city, api }) {
 }
 
 FavoritesCity.propTypes = {
-  hotels: PropTypes.array.isRequired,
+  hotels: PropTypes.arrayOf(hotelProps).isRequired,
   city: PropTypes.string.isRequired,
   api: PropTypes.func.isRequired,
 };

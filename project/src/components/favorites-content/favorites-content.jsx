@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FavoritesCity from '../favorites-city/favorites-city.jsx';
+import { hotelProps } from '../../utils/prop-validation';
 
 function getUnicCities(hotels) {
   const unicCities = new Set();
@@ -26,6 +27,6 @@ export default function FavoritesContent({ hotels, api }) {
 }
 
 FavoritesContent.propTypes = {
-  hotels: PropTypes.array.isRequired,
+  hotels: PropTypes.arrayOf(hotelProps).isRequired,
   api: PropTypes.func.isRequired,
 };

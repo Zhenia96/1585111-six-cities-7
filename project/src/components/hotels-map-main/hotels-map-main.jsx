@@ -1,6 +1,7 @@
 import React from 'react';
 import HotelsMap from '../hotels-map/hotels-map.jsx';
 import PropTypes from 'prop-types';
+import { hotelProps } from '../../utils/prop-validation';
 
 export default function MapMain({ activeHotel, hotels }) {
   return (
@@ -11,6 +12,6 @@ export default function MapMain({ activeHotel, hotels }) {
 }
 
 MapMain.propTypes = {
-  activeHotel: PropTypes.object,
-  hotels: PropTypes.array.isRequired,
+  activeHotel: hotelProps,
+  hotels: PropTypes.arrayOf(hotelProps).isRequired,
 };

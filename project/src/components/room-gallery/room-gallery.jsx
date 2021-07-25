@@ -22,5 +22,5 @@ export default function RoomGallery({ images }) {
 }
 
 RoomGallery.propTypes = {
-  images: PropTypes.array.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

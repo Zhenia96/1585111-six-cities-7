@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CardType } from '../../constant';
 import PlaceCard from '../place-card/place-card';
+import { hotelProps } from '../../utils/prop-validation';
 
 
 export default function NearestHotels({ api, nearestHotels }) {
@@ -15,5 +16,5 @@ export default function NearestHotels({ api, nearestHotels }) {
 
 NearestHotels.propTypes = {
   api: PropTypes.func.isRequired,
-  nearestHotels: PropTypes.array.isRequired,
+  nearestHotels: PropTypes.arrayOf(hotelProps).isRequired,
 };

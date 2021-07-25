@@ -1,8 +1,8 @@
 import { getPercentageRating, getFormatedDate } from '../../utils/common.js';
 import { DateFormat } from '../../constant.js';
 import React from 'react';
-import PropTypes from 'prop-types';
 import ProStatus from '../pro-status/pro-status.jsx';
+import { reviewProps } from '../../utils/prop-validation';
 
 export default function Review({ review }) {
   const { comment, date, rating, user } = review;
@@ -35,14 +35,5 @@ export default function Review({ review }) {
 }
 
 Review.propTypes = {
-  review: PropTypes.shape({
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.object.isRequired,
-    rating: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      avatarUrl: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-  }),
+  review: reviewProps,
 };
