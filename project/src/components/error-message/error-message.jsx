@@ -4,9 +4,9 @@ import { getErrorMessage } from '../../store/other/selectors';
 import { setErrorMessage } from '../../store/action';
 import './style.css';
 
-const MESSAGE_TIMEOUT = 2000;
+const TIMEOUT = 2000;
 
-export default function Error() {
+export default function ErrorMessage() {
   const errorMessage = useSelector(getErrorMessage);
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ export default function Error() {
       if (!isUmount && errorMessage !== '') {
         dispatch(setErrorMessage(''));
       }
-    }, MESSAGE_TIMEOUT);
+    }, TIMEOUT);
 
     return () => isUmount = true;
   });

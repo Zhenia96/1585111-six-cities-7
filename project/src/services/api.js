@@ -23,9 +23,9 @@ export default function createApi(onUnauthorized, onError) {
     const { response } = err;
     if (response.status === ResponseStatus.NO_AUTH) {
       onUnauthorized();
-    } else {
-      onError(response.statusText);
     }
+    onError(response.statusText);
+
     return err;
   }
 

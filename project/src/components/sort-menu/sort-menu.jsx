@@ -4,11 +4,11 @@ import { changeSortType } from '../../store/action.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSortType } from '../../store/other/selectors';
 
-const SORT_OPTION_ACTIVE = 'places__option--active';
-const SORT_OPTIONS_OPENED = 'places__options--opened';
+const SORT_ITEM_ACTIVE = 'places__option--active';
+const SORT_LIST_OPENED = 'places__options--opened';
 
 function setOptionActiveClass(sortType, currentSortType) {
-  return sortType === currentSortType ? SORT_OPTION_ACTIVE : '';
+  return sortType === currentSortType ? SORT_ITEM_ACTIVE : '';
 }
 
 export default function SortMenu() {
@@ -39,7 +39,7 @@ export default function SortMenu() {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${showStatus ? SORT_OPTIONS_OPENED : ''}`} onClick={handleOptionsClick}>
+      <ul className={`places__options places__options--custom ${showStatus ? SORT_LIST_OPENED : ''}`} onClick={handleOptionsClick}>
         <li className={`places__option ${setOptionActiveClass(SortType.POPULAR, sortType)}`} tabIndex="0">Popular</li>
         <li className={`places__option ${setOptionActiveClass(SortType.PRICE_LOW_TO_HIGH, sortType)}`} tabIndex="0">Price: low to high</li>
         <li className={`places__option ${setOptionActiveClass(SortType.PRICE_HIGH_TO_LOW, sortType)}`} tabIndex="0">Price: high to low</li>

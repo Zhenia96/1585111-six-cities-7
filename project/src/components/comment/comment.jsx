@@ -5,12 +5,19 @@ import { sortReviews, sliceReviews } from '../../utils/common';
 import PropTypes from 'prop-types';
 import { ApiContext } from '../../context/context';
 
-const DEFAULT_RATING = 0;
 const DEFAULT_MESSAGE = '';
-const MAX_RATING_VALUE = 5;
-const MIN_RATING_VALUE = 1;
-const MAX_MESSAGE_VALUE = 300;
-const MIN_MESSAGE_VALUE = 50;
+
+const MessageValue = {
+  MAX: 300,
+  MIN: 50,
+};
+
+const RatingValue = {
+  DEFAULT: 0,
+  MAX: 5,
+  MIN: 1,
+};
+
 const StarPosition = {
   FIRST: '1',
   SECOND: '2',
@@ -24,17 +31,17 @@ function isChecked(starPosition, rating) {
 }
 
 function isCommentValid(rating, message) {
-  if (!(rating >= MIN_RATING_VALUE && rating <= MAX_RATING_VALUE)) {
+  if (!(rating >= RatingValue.MIN && rating <= RatingValue.MAX)) {
     return false;
   }
-  if (!(message.length >= MIN_MESSAGE_VALUE && message.length <= MAX_MESSAGE_VALUE)) {
+  if (!(message.length >= MessageValue.MIN && message.length <= MessageValue.MAX)) {
     return false;
   }
   return true;
 }
 
 export default function Comment({ id, resetReviews }) {
-  const [rating, setRating] = useState(DEFAULT_RATING);
+  const [rating, setRating] = useState(RatingValue.DEFAULT);
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
   const [isLoaded, setIsLoaded] = useState(true);
 
@@ -58,7 +65,7 @@ export default function Comment({ id, resetReviews }) {
           const sortedReviews = sortReviews(adaptedReviews);
 
           resetReviews(sliceReviews(sortedReviews, SHOWN_REVIEWS_COUNT));
-          setRating(DEFAULT_RATING);
+          setRating(RatingValue.DEFAULT);
           setMessage(DEFAULT_MESSAGE);
           setIsLoaded(true);
         })

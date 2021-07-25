@@ -5,8 +5,13 @@ import PropTypes from 'prop-types';
 import useMap from '../../hooks/use-map';
 import { hotelProps } from '../../utils/prop-validation';
 
+const IconUrl = {
+  DEFAULT: 'img/pin.svg',
+  ACTIVE: 'img/pin-active.svg',
+};
+
 function getIcon(isActive) {
-  const iconUrl = isActive ? 'img/pin-active.svg' : 'img/pin.svg';
+  const iconUrl = isActive ? IconUrl.ACTIVE : IconUrl.DEFAULT;
   return Leaflet.icon({
     iconUrl,
     iconSize: [30, 30],

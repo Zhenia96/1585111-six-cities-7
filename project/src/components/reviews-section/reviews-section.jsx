@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { ApiContext } from '../../context/context';
 
-
 export default function ReviewsSection({ id }) {
   const [reviews, setReviews] = useState([]);
 

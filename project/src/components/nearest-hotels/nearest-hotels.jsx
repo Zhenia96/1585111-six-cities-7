@@ -4,7 +4,6 @@ import { CardType } from '../../constant';
 import PlaceCard from '../place-card/place-card';
 import { hotelProps } from '../../utils/prop-validation';
 
-
 export default function NearestHotels({ nearestHotels }) {
 
   return (

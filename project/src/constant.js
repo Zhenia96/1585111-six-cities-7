@@ -27,7 +27,6 @@ export const ActionType = {
   CHANGE_HOTELS_LOADING_STATUS: 'changeHotelsLoadingStatus',
   LOGIN: 'login',
   LOGOUT: 'logout',
-  REDIRECT_TO_LOGIN: 'redirectToLogin',
   SET_ERROR_MESSAGE: 'setErrorMessage',
 };
 

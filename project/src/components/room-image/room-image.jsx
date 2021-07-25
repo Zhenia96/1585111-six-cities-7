@@ -12,4 +12,3 @@ export default function RoomImage({ image }) {
 RoomImage.propTypes = {
   image: PropTypes.string.isRequired,
 };
-
