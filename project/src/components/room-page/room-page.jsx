@@ -1,7 +1,6 @@
 import { getPercentageRating, getTextWithCapitalFirstLetter } from '../../utils/common.js';
 import { AppPath, ServerPath, ClassName } from '../../constant.js';
 import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
 import RoomGood from '../room-good/room-good.jsx';
 import PremiumMark from '../premium-mark/premium-mark.jsx';
 import NearestHotels from '../nearest-hotels/nearest-hotels.jsx';

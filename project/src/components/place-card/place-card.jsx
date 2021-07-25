@@ -1,13 +1,13 @@
 import { AppPath, CardType, ClassName } from '../../constant.js';
 import { getPercentageRating, getTextWithCapitalFirstLetter } from '../../utils/common.js';
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PremiumMark from '../premium-mark/premium-mark.jsx';
 import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 import { hotelProps } from '../../utils/prop-validation';
 
-export default function PlaceCard({ hotel, cardType, onCardMouseOver }) {
+function PlaceCard({ hotel, cardType, onCardMouseOver }) {
   const { isFavorite, isPremium, previewImage, price, rating, title, type, id } = hotel;
 
   function handleCardMouseOver() {
@@ -50,3 +50,5 @@ PlaceCard.propTypes = {
   cardType: PropTypes.string.isRequired,
   onCardMouseOver: PropTypes.func,
 };
+
+export default memo(PlaceCard);
