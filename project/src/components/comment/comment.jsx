@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ServerPath, SHOWN_REVIEWS_COUNT } from '../../constant';
 import { adaptReviewsToClient } from '../../utils/adapter';
 import { sortReviews, sliceReviews } from '../../utils/common';
 import PropTypes from 'prop-types';
+import { ApiContext } from '../../context/context';
 
 const DEFAULT_RATING = 0;
 const DEFAULT_MESSAGE = '';
@@ -32,10 +33,12 @@ function isCommentValid(rating, message) {
   return true;
 }
 
-export default function Comment({ id, api, resetReviews }) {
+export default function Comment({ id, resetReviews }) {
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
   const [isLoaded, setIsLoaded] = useState(true);
+
+  const api = useContext(ApiContext);
 
   function handleRatingChange({ target }) {
     setRating(target.value);
@@ -118,6 +121,5 @@ export default function Comment({ id, api, resetReviews }) {
 
 Comment.propTypes = {
   id: PropTypes.string.isRequired,
-  api: PropTypes.func.isRequired,
   resetReviews: PropTypes.func.isRequired,
 };

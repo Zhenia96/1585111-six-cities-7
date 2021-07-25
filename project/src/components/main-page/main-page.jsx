@@ -7,13 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import { getCity } from '../../store/other/selectors';
 import { getHotelsLoadingStatus, getSortedHotels } from '../../store/hotels/selectors';
-import PropTypes from 'prop-types';
 
 function setActiveClass(checkedCity, city) {
   return checkedCity === city ? 'tabs__item--active' : '';
 }
 
-export default function MainPage({ api }) {
+export default function MainPage() {
   const [activeHotel, setActiveHotel] = useState(null);
   const [emptyStatus, setEmptyStatus] = useState(false);
 
@@ -77,13 +76,9 @@ export default function MainPage({ api }) {
         </div>
         <div className="cities">
           {hotelsLoadingStatus ?
-            <CityContainer hotels={hotels} city={city} onCardMouseOver={handleCardMouseOver} activeHotel={activeHotel} changeEmptyStatus={handleEmptyStatusChange} api={api} /> :
+            <CityContainer hotels={hotels} city={city} onCardMouseOver={handleCardMouseOver} activeHotel={activeHotel} changeEmptyStatus={handleEmptyStatusChange} /> :
             <LoadingScreen />}
         </div>
       </main>
     </div>);
 }
-
-MainPage.propTypes = {
-  api: PropTypes.func.isRequired,
-};

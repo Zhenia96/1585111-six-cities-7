@@ -6,6 +6,8 @@ import { getAuthorizationStatus } from '../../store/user/selectors';
 import { getHotels } from '../../store/hotels/selectors';
 import { Redirect } from 'react-router-dom';
 import { changeFavoriteStatus } from '../../store/action';
+import { useContext } from 'react';
+import { ApiContext } from '../../context/context.js';
 
 function getIconWidth(parentClassName) {
   switch (parentClassName) {
@@ -25,10 +27,12 @@ function getIconHeight(parentClassName) {
   }
 }
 
-export default function BookmarkButton({ isFavorite, id, parentClassName, api }) {
+export default function BookmarkButton({ isFavorite, id, parentClassName }) {
   const [isLoaded, setIsLoaded] = useState(true);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [isActive, setIsActive] = useState(isFavorite);
+
+  const api = useContext(ApiContext);
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const hotels = useSelector(getHotels);
@@ -72,5 +76,4 @@ BookmarkButton.propTypes = {
   parentClassName: PropTypes.string.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
-  api: PropTypes.func.isRequired,
 };

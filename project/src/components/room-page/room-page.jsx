@@ -1,6 +1,6 @@
 import { getPercentageRating, getTextWithCapitalFirstLetter } from '../../utils/common.js';
 import { AppPath, ServerPath, ClassName } from '../../constant.js';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import RoomGood from '../room-good/room-good.jsx';
 import PremiumMark from '../premium-mark/premium-mark.jsx';
@@ -14,6 +14,7 @@ import { adaptHotelToClient, adaptHotelsToClient } from '../../utils/adapter';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 import RoomGallery from '../room-gallery/room-gallery.jsx';
+import { ApiContext } from '../../context/context.js';
 
 const MAX_SHOWN_HOTELS = 3;
 
@@ -25,10 +26,13 @@ function sliceHotels(hotels, maxCount) {
   return hotels;
 }
 
-export default function RoomPage({ api }) {
+export default function RoomPage() {
   const [hotel, setHotel] = useState(null);
   const [nearestHotels, setNearestHotels] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const api = useContext(ApiContext);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -94,7 +98,7 @@ export default function RoomPage({ api }) {
                 <h1 className="property__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <BookmarkButton parentClassName={ClassName.PROPERTY} id={hotel.id} isFavorite={hotel.isFavorite} api={api} />
+                <BookmarkButton parentClassName={ClassName.PROPERTY} id={hotel.id} isFavorite={hotel.isFavorite} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -141,7 +145,7 @@ export default function RoomPage({ api }) {
                   </p>
                 </div>
               </div>
-              <ReviewsSection api={api} id={id} />
+              <ReviewsSection id={id} />
             </div>
           </div>
           <section className="property__map map">
@@ -153,14 +157,10 @@ export default function RoomPage({ api }) {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearestHotels id={id} api={api} nearestHotels={nearestHotels} />
+            <NearestHotels id={id} nearestHotels={nearestHotels} />
           </section>
         </div>
       </main>
     </div>
   );
 }
-
-RoomPage.propTypes = {
-  api: PropTypes.func.isRequired,
-};

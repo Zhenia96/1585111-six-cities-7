@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 import { hotelProps } from '../../utils/prop-validation';
 
-function getFavoriteCard(hotel, city, api) {
+function getFavoriteCard(hotel, city) {
   if (hotel.city.name === city && hotel.isFavorite) {
-    return <PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.FAVORITES} api={api} ></PlaceCard >;
+    return <PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.FAVORITES} ></PlaceCard >;
   }
 }
 
-export default function FavoritesCity({ hotels, city, api }) {
+export default function FavoritesCity({ hotels, city }) {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -21,7 +21,7 @@ export default function FavoritesCity({ hotels, city, api }) {
         </div>
       </div>
       <div className="favorites__places">
-        {hotels.map((hotel) => getFavoriteCard(hotel, city, api))}
+        {hotels.map((hotel) => getFavoriteCard(hotel, city))}
       </div>
     </li>
   );
@@ -30,5 +30,4 @@ export default function FavoritesCity({ hotels, city, api }) {
 FavoritesCity.propTypes = {
   hotels: PropTypes.arrayOf(hotelProps).isRequired,
   city: PropTypes.string.isRequired,
-  api: PropTypes.func.isRequired,
 };

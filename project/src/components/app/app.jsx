@@ -1,6 +1,5 @@
 import { AppPath } from '../../constant.js';
 import React from 'react';
-import PropTypes from 'prop-types';
 import MainPage from '../main-page/main-page.jsx';
 import SignInPage from '../sign-in-page/sign-in-page.jsx';
 import FavoritesPage from '../favorites-page/favorites-page.jsx';
@@ -9,14 +8,13 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route.jsx';
 import ErrorPage from '../error-page/error-page.jsx';
 
-export default function App(props) {
-  const { api } = props;
+export default function App() {
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppPath.MAIN} exact>
-          <MainPage api={api} />
+          <MainPage />
         </Route>
         <Route path={AppPath.LOGIN} exact>
           <SignInPage />
@@ -25,13 +23,11 @@ export default function App(props) {
           exact
           path={AppPath.FAVORITES}
           render={() => (
-            <FavoritesPage
-              api={api}
-            />
+            <FavoritesPage />
           )}
         />
         <Route path={`${AppPath.OFFER}/:id`} exact>
-          <RoomPage api={api} />
+          <RoomPage />
         </Route>
         <Route>
           <ErrorPage />
@@ -40,7 +36,3 @@ export default function App(props) {
     </BrowserRouter>
   );
 }
-
-App.propTypes = {
-  api: PropTypes.func.isRequired,
-};

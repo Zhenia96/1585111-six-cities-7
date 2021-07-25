@@ -5,16 +5,15 @@ import PlaceCard from '../place-card/place-card';
 import { hotelProps } from '../../utils/prop-validation';
 
 
-export default function NearestHotels({ api, nearestHotels }) {
+export default function NearestHotels({ nearestHotels }) {
 
   return (
     <div className="near-places__list places__list">
-      {nearestHotels.map((hotel) => <PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.NEAR} api={api}></PlaceCard>)}
+      {nearestHotels.map((hotel) => <PlaceCard key={hotel.id} hotel={hotel} cardType={CardType.NEAR}></PlaceCard>)}
     </div>
   );
 }
 
 NearestHotels.propTypes = {
-  api: PropTypes.func.isRequired,
   nearestHotels: PropTypes.arrayOf(hotelProps).isRequired,
 };

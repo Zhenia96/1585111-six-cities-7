@@ -7,7 +7,7 @@ import PremiumMark from '../premium-mark/premium-mark.jsx';
 import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 import { hotelProps } from '../../utils/prop-validation';
 
-export default function PlaceCard({ hotel, cardType, onCardMouseOver, api }) {
+export default function PlaceCard({ hotel, cardType, onCardMouseOver }) {
   const { isFavorite, isPremium, previewImage, price, rating, title, type, id } = hotel;
 
   function handleCardMouseOver() {
@@ -28,7 +28,7 @@ export default function PlaceCard({ hotel, cardType, onCardMouseOver, api }) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton parentClassName={ClassName.PLACE_CARD} id={id} isFavorite={isFavorite} api={api} />
+          <BookmarkButton parentClassName={ClassName.PLACE_CARD} id={id} isFavorite={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -49,5 +49,4 @@ PlaceCard.propTypes = {
   hotel: hotelProps,
   cardType: PropTypes.string.isRequired,
   onCardMouseOver: PropTypes.func,
-  api: PropTypes.func.isRequired,
 };

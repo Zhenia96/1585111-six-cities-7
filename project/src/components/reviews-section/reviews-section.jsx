@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Comment from '../comment/comment';
 import ReviewList from '../review-list/review-list';
 import { ServerPath, AuthorizationStatus, SHOWN_REVIEWS_COUNT } from '../../constant';
@@ -7,10 +7,13 @@ import { sortReviews, sliceReviews } from '../../utils/common';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user/selectors';
+import { ApiContext } from '../../context/context';
 
 
-export default function ReviewsSection({ id, api }) {
+export default function ReviewsSection({ id }) {
   const [reviews, setReviews] = useState([]);
+
+  const api = useContext(ApiContext);
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
@@ -32,7 +35,7 @@ export default function ReviewsSection({ id, api }) {
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ReviewList reviews={reviews} />
       {authorizationStatus === AuthorizationStatus.AUTH ?
-        <Comment id={id} api={api} resetReviews={setReviews} /> :
+        <Comment id={id} resetReviews={setReviews} /> :
         ''}
     </section>
   );
@@ -40,5 +43,4 @@ export default function ReviewsSection({ id, api }) {
 
 ReviewsSection.propTypes = {
   id: PropTypes.string.isRequired,
-  api: PropTypes.func.isRequired,
 };

@@ -1,18 +1,19 @@
 import { AppPath, ServerPath } from '../../constant.js';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import PageHeader from '../page-header/page-header.jsx';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import FavoritesContent from '../favorites-content/favorites-content.jsx';
 import FavoritesContentEmpty from '../favorites-content-empty/favorites-content-empty.jsx';
 import { adaptHotelsToClient } from '../../utils/adapter';
+import { ApiContext } from '../../context/context.js';
 
 
-export default function FavoritesPage({ api }) {
+export default function FavoritesPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hotels, setHotels] = useState([]);
 
+  const api = useContext(ApiContext);
 
   useEffect(() => {
     let isUnmount = false;
@@ -45,7 +46,7 @@ export default function FavoritesPage({ api }) {
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           {hotels.length ?
-            <FavoritesContent hotels={hotels} api={api} /> :
+            <FavoritesContent hotels={hotels} /> :
             <FavoritesContentEmpty />}
         </div>
       </main>
@@ -57,8 +58,3 @@ export default function FavoritesPage({ api }) {
     </div>
   );
 }
-
-FavoritesPage.propTypes = {
-  api: PropTypes.func.isRequired,
-};
-

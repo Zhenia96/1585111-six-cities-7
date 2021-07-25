@@ -8,6 +8,7 @@ import { getHotels, checkAuthorizationStatus } from './store/api-action';
 import { logout, setErrorMessage } from './store/action';
 import { configureStore } from '@reduxjs/toolkit';
 import Error from './components/error/error';
+import { ApiContext } from './context/context';
 
 const api = createApi(() => store.dispatch(logout()), (message) => store.dispatch(setErrorMessage(message)));
 
@@ -28,7 +29,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Error />
-      <App api={api} />
+      <ApiContext.Provider value={api}>
+        <App />
+      </ApiContext.Provider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
