@@ -29,9 +29,7 @@ export default function createApi(onUnauthorized, onError) {
     return err;
   }
 
-
   api.interceptors.response.use(onSuccess, onFail);
 
   return api;
 }
-

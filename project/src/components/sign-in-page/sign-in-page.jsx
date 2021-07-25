@@ -16,10 +16,6 @@ export default function SignInPage() {
 
   const dispatch = useDispatch();
 
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
-    return <Redirect to={AppPath.MAIN} />;
-  }
-
   function handleEmailChange({ target }) {
     setEmail(target.value);
   }
@@ -33,6 +29,10 @@ export default function SignInPage() {
     if (password.trim() && email.trim()) {
       dispatch(signIn({ email, password }));
     }
+  }
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return <Redirect to={AppPath.MAIN} />;
   }
 
   return (

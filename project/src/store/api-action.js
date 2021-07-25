@@ -26,7 +26,7 @@ export const signIn = ({ email, password }) => (dispatch, getState, api) => {
 
 export const signOut = () => (dispatch, getState, api) => {
   api.delete(ServerPath.LOGOUT)
-    .then((response) => {
+    .then(() => {
       localStorage.removeItem('token');
       api.defaults.headers['X-Token'] = '';
       dispatch(logout());
@@ -41,7 +41,7 @@ export const checkAuthorizationStatus = () => (dispatch, getState, api) => {
         dispatch(login(adaptAuthInfoToClient(response.data)));
       }
     })
-    .catch((err) => {
+    .catch(() => {
       dispatch(logout());
     });
 };

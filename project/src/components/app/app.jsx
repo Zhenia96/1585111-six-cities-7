@@ -10,7 +10,6 @@ import PrivateRoute from '../private-route/private-route.jsx';
 import ErrorPage from '../error-page/error-page.jsx';
 
 export default function App(props) {
-
   const { api } = props;
 
   return (
