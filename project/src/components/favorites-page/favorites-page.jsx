@@ -7,11 +7,15 @@ import FavoritesContent from '../favorites-content/favorites-content.jsx';
 import FavoritesContentEmpty from '../favorites-content-empty/favorites-content-empty.jsx';
 import { adaptHotelsToClient } from '../../utils/adapter';
 import { ApiContext } from '../../context/context.js';
+import { useDispatch } from 'react-redux';
+import { setErrorMessage } from '../../store/action.js';
 
 
 export default function FavoritesPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hotels, setHotels] = useState([]);
+
+  const dispatch = useDispatch();
 
   const api = useContext(ApiContext);
 
@@ -26,14 +30,15 @@ export default function FavoritesPage() {
           setIsLoaded(true);
         }
       })
-      .catch(() => {
+      .catch(({ response }) => {
         if (!isUnmount) {
+          dispatch(setErrorMessage(response.statusText));
           setIsLoaded(true);
         }
       });
 
     return () => isUnmount = true;
-  }, [api, setHotels, setIsLoaded]);
+  }, [api, setHotels, setIsLoaded, dispatch]);
 
   if (!isLoaded) {
     return <LoadingScreen />;

@@ -1,5 +1,5 @@
 import { ServerPath, ResponseStatus } from '../constant.js';
-import { changeHotelsLoadingStatus, changeHotels, logout, login } from './action.js';
+import { changeHotelsLoadingStatus, changeHotels, logout, login, setErrorMessage } from './action.js';
 import { adaptHotelsToClient, adaptAuthInfoToClient } from '../utils/adapter.js';
 
 export const getHotels = () => (dispatch, getState, api) => {
@@ -9,7 +9,9 @@ export const getHotels = () => (dispatch, getState, api) => {
       dispatch(changeHotels(adaptHotelsToClient(response.data)));
       dispatch(changeHotelsLoadingStatus(true));
     })
-    .catch((err) => err);
+    .catch(({ response }) => {
+      dispatch(setErrorMessage(response.statusText));
+    });
 };
 
 
@@ -21,7 +23,9 @@ export const signIn = ({ email, password }) => (dispatch, getState, api) => {
       dispatch(login(adaptAuthInfoToClient(response.data)));
       dispatch(getHotels());
     })
-    .catch((err) => err);
+    .catch(({ response }) => {
+      dispatch(setErrorMessage(response.statusText));
+    });
 };
 
 export const signOut = () => (dispatch, getState, api) => {
@@ -31,7 +35,9 @@ export const signOut = () => (dispatch, getState, api) => {
       api.defaults.headers['X-Token'] = '';
       dispatch(logout());
     })
-    .catch((err) => err);
+    .catch(({ response }) => {
+      dispatch(setErrorMessage(response.statusText));
+    });
 };
 
 export const checkAuthorizationStatus = () => (dispatch, getState, api) => {
@@ -41,7 +47,8 @@ export const checkAuthorizationStatus = () => (dispatch, getState, api) => {
         dispatch(login(adaptAuthInfoToClient(response.data)));
       }
     })
-    .catch(() => {
+    .catch(({ response }) => {
+      dispatch(setErrorMessage(response.statusText));
       dispatch(logout());
     });
 };

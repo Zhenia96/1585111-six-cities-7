@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { getHotels } from '../../store/hotels/selectors';
 import { Redirect } from 'react-router-dom';
-import { changeFavoriteStatus } from '../../store/action';
+import { changeFavoriteStatus, setErrorMessage } from '../../store/action';
 import { useContext } from 'react';
 import { ApiContext } from '../../context/context.js';
 
@@ -53,7 +53,8 @@ export default function BookmarkButton({ isFavorite, id, parentClassName }) {
         setIsLoaded(true);
         setIsActive(!isActive);
       })
-      .catch(() => {
+      .catch(({ response }) => {
+        dispatch(setErrorMessage(response.statusText));
         setIsLoaded(true);
       });
   }

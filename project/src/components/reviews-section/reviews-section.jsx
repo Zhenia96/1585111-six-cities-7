@@ -5,14 +5,17 @@ import { ServerPath, AuthorizationStatus, SHOWN_REVIEWS_COUNT } from '../../cons
 import { adaptReviewsToClient } from '../../utils/adapter';
 import { sortReviews, sliceReviews } from '../../utils/common';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { ApiContext } from '../../context/context';
+import { setErrorMessage } from '../../store/action';
 
 export default function ReviewsSection({ id }) {
   const [reviews, setReviews] = useState([]);
 
   const api = useContext(ApiContext);
+
+  const dispatch = useDispatch();
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
@@ -25,9 +28,14 @@ export default function ReviewsSection({ id }) {
           const sortedReviews = sortReviews(adaptedReviews);
           setReviews(sliceReviews(sortedReviews, SHOWN_REVIEWS_COUNT));
         }
+      })
+      .catch(({ response }) => {
+        if (!isUnmount) {
+          dispatch(setErrorMessage(response.statusText));
+        }
       });
     return () => isUnmount = true;
-  }, [api, id]);
+  }, [api, id, dispatch]);
 
   return (
     <section className="property__reviews reviews">

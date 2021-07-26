@@ -14,6 +14,8 @@ import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 import RoomGallery from '../room-gallery/room-gallery.jsx';
 import { ApiContext } from '../../context/context.js';
+import { useDispatch } from 'react-redux';
+import { setErrorMessage } from '../../store/action.js';
 
 const MAX_SHOWN_HOTELS = 3;
 
@@ -30,6 +32,8 @@ export default function RoomPage() {
   const [nearestHotels, setNearestHotels] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const dispatch = useDispatch();
+
   const api = useContext(ApiContext);
 
   const { id } = useParams();
@@ -45,15 +49,16 @@ export default function RoomPage() {
           setIsLoaded(true);
         }
       })
-      .catch(() => {
+      .catch(({ response }) => {
         if (!isUnmount) {
           setHotel(null);
           setIsLoaded(true);
+          dispatch(setErrorMessage(response.statusText));
         }
       });
 
     return () => isUnmount = true;
-  }, [api, id, setHotel, setIsLoaded]);
+  }, [api, id, setHotel, setIsLoaded, dispatch]);
 
   useEffect(() => {
     let isUnmount = false;
@@ -65,13 +70,14 @@ export default function RoomPage() {
           setNearestHotels(slicedHotels);
         }
       })
-      .catch(() => {
+      .catch(({ response }) => {
         if (!isUnmount) {
           setNearestHotels([]);
+          dispatch(setErrorMessage(response.statusText));
         }
       });
     return () => isUnmount = true;
-  }, [api, id, setNearestHotels]);
+  }, [api, id, setNearestHotels, dispatch]);
 
 
   if (!isLoaded) {

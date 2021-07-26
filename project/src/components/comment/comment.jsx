@@ -4,6 +4,8 @@ import { adaptReviewsToClient } from '../../utils/adapter';
 import { sortReviews, sliceReviews } from '../../utils/common';
 import PropTypes from 'prop-types';
 import { ApiContext } from '../../context/context';
+import { useDispatch } from 'react-redux';
+import { setErrorMessage } from '../../store/action';
 
 const DEFAULT_MESSAGE = '';
 
@@ -45,6 +47,8 @@ export default function Comment({ id, resetReviews }) {
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
   const [isLoaded, setIsLoaded] = useState(true);
 
+  const dispatch = useDispatch();
+
   const api = useContext(ApiContext);
 
   function handleRatingChange({ target }) {
@@ -69,7 +73,8 @@ export default function Comment({ id, resetReviews }) {
           setMessage(DEFAULT_MESSAGE);
           setIsLoaded(true);
         })
-        .catch(() => {
+        .catch(({ response }) => {
+          dispatch(setErrorMessage(response.statusText));
           setIsLoaded(true);
 
         });
